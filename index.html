@@ -112,6 +112,19 @@
             font-weight: bold;
         }
 
+        .nav-item.external-link {
+            text-decoration: none;
+            color: white;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .nav-item.external-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #ffeb3b;
+        }
+
         /* Right side - Content with seashell background */
         .right-side {
             width: 80%;
@@ -199,7 +212,36 @@
 
         .section-content p {
             margin-bottom: 15px;
-            font-size: 1.2em;
+            font-size: 1.1em;
+        }
+
+        .section-content a {
+            color: #0366d6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .section-content a:hover {
+            color: #0256b3;
+            text-decoration: underline;
+        }
+
+        /* Style for external links */
+        .custom-link {
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .custom-link:hover {
+            color: #0256b3;
+            background-color: rgba(3, 102, 214, 0.1);
+            text-decoration: underline;
+            transform: translateY(-2px);
         }
 
         /* Make sure content takes full height */
@@ -367,8 +409,17 @@
                     <p><strong>Email:</strong> your.email@example.com</p>
                     <p><strong>Phone:</strong> +1 (555) 123-4567</p>
                     <p><strong>LinkedIn:</strong> linkedin.com/in/yourprofile</p>
-                    <p><strong>GitHub:</strong> github.com/yourusername</p>
+                    <p><strong>GitHub:</strong> 
+                        <a href="https://matplotlib.org/stable/gallery/color/named_colors.html" target="_blank" style="color: #0366d6; text-decoration: none;">
+                github.com/yourusername
+                        </a>
+                    </p>
                     <p><strong>Location:</strong> Your City, Country</p>
+                    <p><strong>Download:</strong> 
+                        <a href="my-resume.pdf" download style="color: #0366d6; text-decoration: none;">
+                               Download My Resume (PDF)
+                        </a>
+                    </p>
                 </div>
             </section>
         </div>
