@@ -121,10 +121,10 @@
             height: 100vh;
         }
 
-        /* Video section */
+        /* GIF-like Video section */
         .video-section {
             width: 100%;
-            margin-bottom: 30px; /* Small distance to first section */
+            margin-bottom: 30px;
             text-align: center;
         }
 
@@ -135,12 +135,33 @@
             text-align: center;
         }
 
-        .video-player {
+        .gif-video {
             width: 100%;
             max-width: 800px;
-            height: 400px;
+            height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            /* Remove video controls appearance */
+            -webkit-appearance: none;
+            appearance: none;
+            pointer-events: none; /* Prevents interaction */
+        }
+
+        /* Hide video controls in WebKit browsers */
+        .gif-video::-webkit-media-controls {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-panel {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-play-button {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-start-playback-button {
+            display: none !important;
         }
 
         /* Content sections */
