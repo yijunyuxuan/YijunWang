@@ -1,9 +1,3 @@
-
-## Updated Complete Code for Your Webpage
-
-Here's how to integrate it into your personal webpage:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,20 +17,18 @@ Here's how to integrate it into your personal webpage:
             overflow: hidden;
         }
 
-        /* Split screen container */
+        /* Your existing container styles */
         .container {
             display: flex;
             height: 100vh;
             width: 100vw;
         }
 
-        /* Left side - Navigation with background image */
         .left-side {
             width: 30%;
             background-image: url('your-background-image.jpg');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
             color: white;
             padding: 40px 20px;
             overflow-y: auto;
@@ -66,54 +58,6 @@ Here's how to integrate it into your personal webpage:
             z-index: 2;
         }
 
-        .profile-photo {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid white;
-            margin-bottom: 30px;
-        }
-
-        .name {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 40px;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-items {
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .nav-item {
-            padding: 18px 20px;
-            margin: 10px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 20px;
-            font-weight: 500;
-            color: white;
-            background: none;
-            border: none;
-            width: 100%;
-            text-align: center;
-        }
-
-        .nav-item:hover {
-            font-size: 24px;
-            transform: scale(1.05);
-            color: #ffeb3b;
-        }
-
-        .nav-item.active {
-            color: #ffeb3b;
-            font-weight: bold;
-        }
-
-        /* Right side - Content */
         .right-side {
             width: 70%;
             background-color: seashell;
@@ -123,33 +67,30 @@ Here's how to integrate it into your personal webpage:
             height: 100vh;
         }
 
-        /* GIF-like Video section */
-        .video-section {
+        /* GIF-like Video Container */
+        .gif-container {
             width: 100%;
             margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .video-title {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #333;
             text-align: center;
         }
 
         .gif-video {
             width: 100%;
             max-width: 800px;
-            height: auto;
+            height: 450px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            /* Remove video controls appearance */
+            object-fit: cover; /* Ensures video fills container nicely */
+            
+            /* Hide all video controls and make it look like an image */
             -webkit-appearance: none;
             appearance: none;
-            pointer-events: none; /* Prevents interaction */
+            background: #000; /* Black background for any empty space */
+            
+            /* Completely remove any video player UI */
+            pointer-events: none; /* Prevents any interaction */
         }
 
-        /* Hide video controls in WebKit browsers */
+        /* Hide controls in all browsers */
         .gif-video::-webkit-media-controls {
             display: none !important;
         }
@@ -166,6 +107,43 @@ Here's how to integrate it into your personal webpage:
             display: none !important;
         }
 
+        .gif-video::-webkit-media-controls-timeline {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-current-time-display {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-time-remaining-display {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-mute-button {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-volume-slider {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-fullscreen-button {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-overlay-play-button {
+            display: none !important;
+        }
+
+        /* For Firefox */
+        .gif-video::-moz-range-track {
+            display: none !important;
+        }
+
+        .gif-video::-moz-range-thumb {
+            display: none !important;
+        }
+
         /* Content sections */
         .content-section {
             min-height: 100vh;
@@ -176,59 +154,10 @@ Here's how to integrate it into your personal webpage:
         }
 
         .section-title {
-            font-size: 3em;
-            margin-bottom: 30px;
+            font-size: 2em;
+            margin-bottom: 20px;
             color: #333;
-            border-bottom: 3px solid #333;
-            padding-bottom: 15px;
-        }
-
-        .section-content {
-            font-size: 1.3em;
-            line-height: 1.8;
-            color: #555;
-        }
-
-        .section-content h3 {
-            color: #333;
-            margin: 25px 0 15px 0;
-            font-size: 1.5em;
-        }
-
-        .section-content p {
-            margin-bottom: 15px;
-        }
-
-        html, body {
-            height: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .left-side, .right-side {
-                width: 100%;
-                position: static;
-                margin-left: 0;
-            }
-            
-            .left-side {
-                height: 50vh;
-            }
-            
-            .right-side {
-                height: 50vh;
-            }
-
-            .name {
-                font-size: 2em;
-            }
-
-            .gif-video {
-                height: auto;
-            }
+            text-align: center;
         }
     </style>
 </head>
@@ -241,42 +170,62 @@ Here's how to integrate it into your personal webpage:
             <div class="nav-items">
                 <div class="nav-item active" data-target="video">INTRODUCTION</div>
                 <div class="nav-item" data-target="about">ABOUT ME</div>
-                <div class="nav-item" data-target="projects">PROJECTS</div>
-                <div class="nav-item" data-target="experience">EXPERIENCE</div>
-                <div class="nav-item" data-target="education">EDUCATION</div>
-                <div class="nav-item" data-target="skills">SKILLS</div>
-                <div class="nav-item" data-target="contact">CONTACT</div>
+                <!-- Other navigation items -->
             </div>
         </div>
 
         <!-- Right Side - Content -->
         <div class="right-side">
-            <!-- Video Section (GIF-like) -->
+            <!-- Video Section (Looks exactly like GIF) -->
             <section id="video" class="content-section">
-                <h2 class="video-title">My Introduction</h2>
-                <div class="video-section">
-                    <video class="gif-video" autoplay muted loop playsinline preload="auto">
+                <h2 class="section-title">My Introduction</h2>
+                <div class="gif-container">
+                    <video class="gif-video" 
+                           autoplay 
+                           muted 
+                           loop 
+                           playsinline 
+                           preload="auto"
+                           disablePictureInPicture
+                           disableRemotePlayback>
                         <source src="your-video.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
             </section>
 
-            <!-- Other sections remain the same -->
+            <!-- Other sections -->
             <section id="about" class="content-section">
                 <h2 class="section-title">About Me</h2>
                 <div class="section-content">
-                    <p>Hello! I'm a passionate developer with expertise in web technologies.</p>
-                    <!-- Your content here -->
+                    <p>Your content here...</p>
                 </div>
             </section>
-
-            <!-- Add other sections as needed -->
         </div>
     </div>
 
     <script>
-        // Navigation and scroll scripts remain the same
+        // Ensure video starts playing and looping (backup)
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.gif-video');
+            
+            // Force video to play (handles some browser restrictions)
+            video.play().catch(function(error) {
+                console.log('Video autoplay failed:', error);
+                // Try playing with user interaction
+                document.addEventListener('click', function() {
+                    video.play();
+                }, { once: true });
+            });
+            
+            // Ensure video loops properly
+            video.loop = true;
+            
+            // Hide any remaining controls (extra safety)
+            video.controls = false;
+        });
+
+        // Your existing navigation script
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
@@ -293,31 +242,6 @@ Here's how to integrate it into your personal webpage:
                     });
                 }
             });
-        });
-
-        const rightSide = document.querySelector('.right-side');
-        const sections = document.querySelectorAll('.content-section');
-        const navItems = document.querySelectorAll('.nav-item');
-
-        rightSide.addEventListener('scroll', function() {
-            let current = '';
-            const scrollPosition = rightSide.scrollTop + 100;
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollPosition >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('data-target') === current) {
-                    item.classList.add('active');
-                }
-            });
-        });
-
-        window.addEventListener('load', function() {
-            document.querySelector('.nav-item[data-target="video"]').classList.add('active');
         });
     </script>
 </body>
