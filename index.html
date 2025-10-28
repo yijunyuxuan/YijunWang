@@ -17,18 +17,20 @@
             overflow: hidden;
         }
 
-        /* Your existing container styles */
+        /* Split screen container - Full page */
         .container {
             display: flex;
             height: 100vh;
             width: 100vw;
         }
 
+        /* Left side - Navigation with background image */
         .left-side {
             width: 30%;
-            background-image: url('your-background-image.jpg');
+            background-image: url('your-background-image.jpg'); /* Upload your image */
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             color: white;
             padding: 40px 20px;
             overflow-y: auto;
@@ -42,6 +44,7 @@
             text-align: center;
         }
 
+        /* Overlay for better text readability */
         .left-side::before {
             content: '';
             position: absolute;
@@ -58,6 +61,58 @@
             z-index: 2;
         }
 
+        /* Profile photo */
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            margin-bottom: 30px;
+        }
+
+        /* Name with larger font size */
+        .name {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Navigation items - no background boxes */
+        .nav-items {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .nav-item {
+            padding: 18px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+            font-weight: 500;
+            color: white;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Hover effect - font size larger */
+        .nav-item:hover {
+            font-size: 24px;
+            transform: scale(1.05);
+            color: #ffeb3b;
+        }
+
+        .nav-item.active {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        /* Right side - Content with seashell background */
         .right-side {
             width: 70%;
             background-color: seashell;
@@ -67,30 +122,28 @@
             height: 100vh;
         }
 
-        /* GIF-like Video Container */
-        .gif-container {
+        /* GIF-like Video section - small distance to next section */
+        .gif-section {
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* Small distance to first section */
             text-align: center;
         }
 
         .gif-video {
             width: 100%;
             max-width: 800px;
-            height: 450px;
+            height: 400px;
             border-radius: 10px;
-            object-fit: cover; /* Ensures video fills container nicely */
+            object-fit: cover;
             
-            /* Hide all video controls and make it look like an image */
+            /* Hide all video controls and make it look like GIF */
             -webkit-appearance: none;
             appearance: none;
-            background: #000; /* Black background for any empty space */
-            
-            /* Completely remove any video player UI */
-            pointer-events: none; /* Prevents any interaction */
+            background: #000;
+            pointer-events: none;
         }
 
-        /* Hide controls in all browsers */
+        /* Completely hide all video controls in all browsers */
         .gif-video::-webkit-media-controls {
             display: none !important;
         }
@@ -99,48 +152,15 @@
             display: none !important;
         }
 
-        .gif-video::-webkit-media-controls-play-button {
-            display: none !important;
-        }
-
-        .gif-video::-webkit-media-controls-start-playback-button {
-            display: none !important;
-        }
-
-        .gif-video::-webkit-media-controls-timeline {
-            display: none !important;
-        }
-
-        .gif-video::-webkit-media-controls-current-time-display {
-            display: none !important;
-        }
-
-        .gif-video::-webkit-media-controls-time-remaining-display {
-            display: none !important;
-        }
-
-        .gif-video::-webkit-media-controls-mute-button {
-            display: none !important;
-        }
-
-        .gif-video::-webkit-media-controls-volume-slider {
-            display: none !important;
-        }
-
-        .gif-video::-webkit-media-controls-fullscreen-button {
-            display: none !important;
-        }
-
+        .gif-video::-webkit-media-controls-play-button,
+        .gif-video::-webkit-media-controls-start-playback-button,
+        .gif-video::-webkit-media-controls-timeline,
+        .gif-video::-webkit-media-controls-current-time-display,
+        .gif-video::-webkit-media-controls-time-remaining-display,
+        .gif-video::-webkit-media-controls-mute-button,
+        .gif-video::-webkit-media-controls-volume-slider,
+        .gif-video::-webkit-media-controls-fullscreen-button,
         .gif-video::-webkit-media-controls-overlay-play-button {
-            display: none !important;
-        }
-
-        /* For Firefox */
-        .gif-video::-moz-range-track {
-            display: none !important;
-        }
-
-        .gif-video::-moz-range-thumb {
             display: none !important;
         }
 
@@ -154,10 +174,61 @@
         }
 
         .section-title {
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: 3em;
+            margin-bottom: 30px;
             color: #333;
-            text-align: center;
+            border-bottom: 3px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .section-content {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .section-content h3 {
+            color: #333;
+            margin: 25px 0 15px 0;
+            font-size: 1.5em;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        /* Make sure content takes full height */
+        html, body {
+            height: 100%;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-side, .right-side {
+                width: 100%;
+                position: static;
+                margin-left: 0;
+            }
+            
+            .left-side {
+                height: 50vh;
+            }
+            
+            .right-side {
+                height: 50vh;
+            }
+
+            .name {
+                font-size: 2em;
+            }
+
+            .gif-video {
+                height: 250px;
+            }
         }
     </style>
 </head>
@@ -165,21 +236,29 @@
     <div class="container">
         <!-- Left Side - Navigation -->
         <div class="left-side">
+            <!-- Profile Photo -->
             <img src="your-photo.jpg" alt="Profile Photo" class="profile-photo">
+            
+            <!-- Name with larger font size -->
             <div class="name">YOUR NAME</div>
+            
+            <!-- Navigation Items - no background boxes -->
             <div class="nav-items">
                 <div class="nav-item active" data-target="video">INTRODUCTION</div>
                 <div class="nav-item" data-target="about">ABOUT ME</div>
-                <!-- Other navigation items -->
+                <div class="nav-item" data-target="projects">PROJECTS</div>
+                <div class="nav-item" data-target="experience">EXPERIENCE</div>
+                <div class="nav-item" data-target="education">EDUCATION</div>
+                <div class="nav-item" data-target="skills">SKILLS</div>
+                <div class="nav-item" data-target="contact">CONTACT</div>
             </div>
         </div>
 
         <!-- Right Side - Content -->
         <div class="right-side">
-            <!-- Video Section (Looks exactly like GIF) -->
+            <!-- Video Section - MP4 shown as GIF -->
             <section id="video" class="content-section">
-                <h2 class="section-title">My Introduction</h2>
-                <div class="gif-container">
+                <div class="gif-section">
                     <video class="gif-video" 
                            autoplay 
                            muted 
@@ -194,25 +273,97 @@
                 </div>
             </section>
 
-            <!-- Other sections -->
+            <!-- About Section -->
             <section id="about" class="content-section">
                 <h2 class="section-title">About Me</h2>
                 <div class="section-content">
-                    <p>Your content here...</p>
+                    <p>Hello! I'm a passionate developer with expertise in web technologies. I love creating innovative solutions and learning new technologies.</p>
+                    <p>With several years of experience in the field, I've worked on various projects ranging from small websites to large-scale applications.</p>
+                    <p>My goal is to create user-friendly, efficient, and scalable solutions that make a difference.</p>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="content-section">
+                <h2 class="section-title">Projects</h2>
+                <div class="section-content">
+                    <h3>Project 1: E-commerce Platform</h3>
+                    <p>A full-stack e-commerce solution built with React and Node.js featuring real-time inventory management and payment processing.</p>
+                    
+                    <h3>Project 2: Task Management App</h3>
+                    <p>A productivity application with real-time collaboration features, drag-and-drop functionality, and team management tools.</p>
+                    
+                    <h3>Project 3: Portfolio Website</h3>
+                    <p>A responsive portfolio website showcasing my work and skills with modern design principles and optimal performance.</p>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="content-section">
+                <h2 class="section-title">Experience</h2>
+                <div class="section-content">
+                    <h3>Senior Developer - Tech Company (2020-Present)</h3>
+                    <p>Leading development teams and architecting scalable solutions for enterprise clients. Managing project timelines and mentoring junior developers.</p>
+                    
+                    <h3>Web Developer - Startup (2018-2020)</h3>
+                    <p>Developed and maintained client websites and applications. Collaborated with design teams to implement responsive web designs.</p>
+                    
+                    <h3>Junior Developer - Agency (2016-2018)</h3>
+                    <p>Started my career building responsive websites and learning best practices in web development and version control.</p>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education" class="content-section">
+                <h2 class="section-title">Education</h2>
+                <div class="section-content">
+                    <h3>Master's in Computer Science</h3>
+                    <p>University of Technology (2014-2016)</p>
+                    <p>Specialized in Artificial Intelligence and Machine Learning. Graduated with honors.</p>
+                    
+                    <h3>Bachelor's in Software Engineering</h3>
+                    <p>State University (2010-2014)</p>
+                    <p>Focus on software development methodologies and database management systems.</p>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="content-section">
+                <h2 class="section-title">Skills</h2>
+                <div class="section-content">
+                    <h3>Technical Skills</h3>
+                    <p>JavaScript, React, Node.js, Python, HTML/CSS, SQL, Git, Docker, AWS</p>
+                    
+                    <h3>Soft Skills</h3>
+                    <p>Problem-solving, Team Leadership, Project Management, Communication, Agile Methodology</p>
+                    
+                    <h3>Languages</h3>
+                    <p>English (Fluent), Spanish (Intermediate), French (Basic)</p>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="content-section">
+                <h2 class="section-title">Contact</h2>
+                <div class="section-content">
+                    <p><strong>Email:</strong> your.email@example.com</p>
+                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                    <p><strong>LinkedIn:</strong> linkedin.com/in/yourprofile</p>
+                    <p><strong>GitHub:</strong> github.com/yourusername</p>
+                    <p><strong>Location:</strong> Your City, Country</p>
                 </div>
             </section>
         </div>
     </div>
 
     <script>
-        // Ensure video starts playing and looping (backup)
+        // Ensure video plays automatically like a GIF
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.querySelector('.gif-video');
             
-            // Force video to play (handles some browser restrictions)
+            // Force video to play and loop
             video.play().catch(function(error) {
-                console.log('Video autoplay failed:', error);
-                // Try playing with user interaction
+                // If autoplay fails, play on first user interaction
                 document.addEventListener('click', function() {
                     video.play();
                 }, { once: true });
@@ -220,28 +371,64 @@
             
             // Ensure video loops properly
             video.loop = true;
-            
-            // Hide any remaining controls (extra safety)
-            video.controls = false;
         });
 
-        // Your existing navigation script
+        // Navigation click handler - jump to sections
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
+                
+                // Remove active class from all items
                 document.querySelectorAll('.nav-item').forEach(nav => {
                     nav.classList.remove('active');
                 });
+                
+                // Add active class to clicked item
                 this.classList.add('active');
+                
+                // Scroll to target section
                 const targetSection = document.getElementById(targetId);
                 if (targetSection) {
                     const rightSide = document.querySelector('.right-side');
+                    const sectionTop = targetSection.offsetTop;
+                    
                     rightSide.scrollTo({
-                        top: targetSection.offsetTop,
+                        top: sectionTop,
                         behavior: 'smooth'
                     });
                 }
             });
+        });
+
+        // Update active nav item on scroll
+        const rightSide = document.querySelector('.right-side');
+        const sections = document.querySelectorAll('.content-section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        rightSide.addEventListener('scroll', function() {
+            let current = '';
+            const scrollPosition = rightSide.scrollTop + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Initial activation
+        window.addEventListener('load', function() {
+            document.querySelector('.nav-item[data-target="video"]').classList.add('active');
         });
     </script>
 </body>
