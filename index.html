@@ -1,18 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Masato Hagiwara</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Split screen container */
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Left side - Navigation */
+        .left-side {
+            width: 30%;
+            background-color: #000;
+            color: white;
+            padding: 40px 20px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        /* Right side - Content */
+        .right-side {
+            width: 70%;
+            background-color: #ffeb3b;
+            margin-left: 30%;
+            padding: 40px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        /* Navigation items */
+        .nav-item {
+            padding: 20px;
+            margin: 10px 0;
+            background-color: #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            background-color: #555;
+        }
+
+        .nav-item.active {
+            background-color: #ffeb3b;
+            color: #000;
+        }
+
+        /* Content sections */
+        .content-section {
+            min-height: 100vh;
+            padding: 40px 0;
+            border-bottom: 2px solid #000;
+        }
+
+        .content-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #000;
+            border-bottom: 3px solid #000;
+            padding-bottom: 10px;
+        }
+
+        .section-content {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Make sure content takes full height */
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Masato Hagiwara</h1>
-    <p>Personal Update (January 2024): I was diagnosed with late-stage lung cancer...</p>
-    <img src="profile.jpg" alt="Masato Hagiwara" class="profile-image">
-    <p>I'm a Research Lead at Earth Species Project...</p>
-    <a href="https://www.gofundme.com">GoFundMe Link</a>
-  </div>
+    <div class="container">
+        <!-- Left Side - Navigation -->
+        <div class="left-side">
+            <div class="nav-item active" data-target="about">ABOUT ME</div>
+            <div class="nav-item" data-target="projects">PROJECTS</div>
+            <div class="nav-item" data-target="experience">EXPERIENCE</div>
+            <div class="nav-item" data-target="education">EDUCATION</div>
+            <div class="nav-item" data-target="skills">SKILLS</div>
+            <div class="nav-item" data-target="contact">CONTACT</div>
+        </div>
+
+        <!-- Right Side - Content -->
+        <div class="right-side">
+            <!-- About Section -->
+            <section id="about" class="content-section">
+                <h2 class="section-title">About Me</h2>
+                <div class="section-content">
+                    <p>Hello! I'm a passionate developer with expertise in web technologies. I love creating innovative solutions and learning new technologies.</p>
+                    <br>
+                    <p>With several years of experience in the field, I've worked on various projects ranging from small websites to large-scale applications.</p>
+                    <br>
+                    <p>My goal is to create user-friendly, efficient, and scalable solutions that make a difference.</p>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="content-section">
+                <h2 class="section-title">Projects</h2>
+                <div class="section-content">
+                    <h3>Project 1: E-commerce Platform</h3>
+                    <p>A full-stack e-commerce solution built with React and Node.js.</p>
+                    <br>
+                    <h3>Project 2: Task Management App</h3>
+                    <p>A productivity application with real-time collaboration features.</p>
+                    <br>
+                    <h3>Project 3: Portfolio Website</h3>
+                    <p>A responsive portfolio website showcasing my work and skills.</p>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="content-section">
+                <h2 class="section-title">Experience</h2>
+                <div class="section-content">
+                    <h3>Senior Developer - Tech Company (2020-Present)</h3>
+                    <p>Leading development teams and architecting scalable solutions.</p>
+                    <br>
+                    <h3>Web Developer - Startup (2018-2020)</h3>
+                    <p>Developed and maintained client websites and applications.</p>
+                    <br>
+                    <h3>Junior Developer - Agency (2016-2018)</h3>
+                    <p>Started my career building responsive websites and learning best practices.</p>
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section id="education" class="content-section">
+                <h2 class="section-title">Education</h2>
+                <div class="section-content">
+                    <h3>Master's in Computer Science</h3>
+                    <p>University of Technology (2014-2016)</p>
+                    <br>
+                    <h3>Bachelor's in Software Engineering</h3>
+                    <p>State University (2010-2014)</p>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="content-section">
+                <h2 class="section-title">Skills</h2>
+                <div class="section-content">
+                    <h3>Technical Skills</h3>
+                    <p>JavaScript, React, Node.js, Python, HTML/CSS, SQL, Git</p>
+                    <br>
+                    <h3>Soft Skills</h3>
+                    <p>Problem-solving, Team Leadership, Project Management, Communication</p>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="content-section">
+                <h2 class="section-title">Contact</h2>
+                <div class="section-content">
+                    <p>Email: your.email@example.com</p>
+                    <br>
+                    <p>Phone: +1 (555) 123-4567</p>
+                    <br>
+                    <p>LinkedIn: linkedin.com/in/yourprofile</p>
+                    <br>
+                    <p>GitHub: github.com/yourusername</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Navigation click handler
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Scroll to target section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    const rightSide = document.querySelector('.right-side');
+                    const sectionTop = targetSection.offsetTop;
+                    
+                    rightSide.scrollTo({
+                        top: sectionTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Update active nav item on scroll
+        const rightSide = document.querySelector('.right-side');
+        const sections = document.querySelectorAll('.content-section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        rightSide.addEventListener('scroll', function() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (rightSide.scrollTop >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
