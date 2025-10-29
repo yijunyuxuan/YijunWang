@@ -185,15 +185,37 @@
             display: none !important;
         }
 
-        .transparent-bg {
-        /* 为透明视频添加背景以便查看 */
-        background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
-                    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
-                    linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
-                    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
-        background-size: 20px 20px;
-        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        .transparent-video-container {
+            background: 
+                /* 添加棋盘格背景以便查看透明度 */
+                linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
         }
+
+        .transparent-mov {
+            width: 600px;
+            height: 400px;
+            object-fit: contain;
+            
+            /* 确保视频本身不添加任何背景 */
+            background: transparent !important;
+            
+            /* GIF-like behavior */
+            -webkit-appearance: none;
+            appearance: none;
+            pointer-events: none;
+        }
+
+        /* 隐藏所有控制条 */
+        .transparent-mov::-webkit-media-controls { display: none !important; }
+        .transparent-mov::-webkit-media-controls-panel { display: none !important; }
 
         /* Content sections */
         .content-section {
@@ -420,8 +442,8 @@
         <div class="right-side">
             <!-- Video Section - MP4 shown as GIF -->
             <section id="video" class="content-section">
-                <div class="gif-section">
-                    <video class="gif-mov" 
+                <div class="transparent-video-container">
+                    <video class="transparent-mov" 
                            autoplay 
                            muted 
                            loop 
@@ -429,6 +451,7 @@
                            preload="auto"
                         <source src="your-video.mov" type="video/quicktime">
                         <source src="your-video.mp4" type="video/mp4">
+                        Your browser does not support transparent videos.
                     </video>
                 </div>
             </section>
