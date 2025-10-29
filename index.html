@@ -150,7 +150,7 @@
             min-height: 30vh;
         }
 
-        .gif-video {
+        .gif-mov {
             width: 100%;
             max-width: 1500px;
             height: 400px;
@@ -173,16 +173,26 @@
             display: none !important;
         }
 
-        .gif-video::-webkit-media-controls-play-button,
-        .gif-video::-webkit-media-controls-start-playback-button,
-        .gif-video::-webkit-media-controls-timeline,
-        .gif-video::-webkit-media-controls-current-time-display,
-        .gif-video::-webkit-media-controls-time-remaining-display,
-        .gif-video::-webkit-media-controls-mute-button,
-        .gif-video::-webkit-media-controls-volume-slider,
-        .gif-video::-webkit-media-controls-fullscreen-button,
-        .gif-video::-webkit-media-controls-overlay-play-button {
+        .gif-mov::-webkit-media-controls-play-button,
+        .gif-mov::-webkit-media-controls-start-playback-button,
+        .gif-mov::-webkit-media-controls-timeline,
+        .gif-mov::-webkit-media-controls-current-time-display,
+        .gif-mov::-webkit-media-controls-time-remaining-display,
+        .gif-mov::-webkit-media-controls-mute-button,
+        .gif-mov::-webkit-media-controls-volume-slider,
+        .gif-mov::-webkit-media-controls-fullscreen-button,
+        .gif-mov::-webkit-media-controls-overlay-play-button {
             display: none !important;
+        }
+
+        .transparent-bg {
+        /* 为透明视频添加背景以便查看 */
+        background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
         }
 
         /* Content sections */
@@ -228,6 +238,61 @@
 
         .section-content a:hover {
             color: #0256b3;
+            text-decoration: underline;
+        }
+
+        /* Papers section styling */
+        .papers-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .paper-item {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid #0366d6;
+        }
+
+        .paper-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #0366d6;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .paper-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .paper-authors {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .paper-venue {
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .paper-links a {
+            color: #0366d6;
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 0.9em;
+        }
+
+        .paper-links a:hover {
             text-decoration: underline;
         }
 
@@ -312,16 +377,14 @@
             <!-- Video Section - MP4 shown as GIF -->
             <section id="video" class="content-section">
                 <div class="gif-section">
-                    <video class="gif-video" 
+                    <video class="gif-mov transparent-bg" 
                            autoplay 
                            muted 
                            loop 
                            playsinline 
                            preload="auto"
-                           disablePictureInPicture
-                           disableRemotePlayback>
+                        <source src="your-video.mov" type="video/quicktime">
                         <source src="your-video.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                 </div>
             </section>
@@ -390,13 +453,19 @@
             <section id="publications" class="content-section">
                 <h2 class="section-title">Publications</h2>
                 <div class="section-content">
-                    <li><strong>Yijun Wang</strong>, Tao Wang, Junjie Mao, Yerong Xu, Zhicheng He, Zheng Zhou, Yongquan Xue, Jiayi Chen, Chen Li, Fangzheng Shi, Missagh Mehdipour, 2025, A&A (resubmitted after considering referee's comments), “Warm absorber outflows in radio-loud active galactic nucleus 3C 59”</li>
-                    <li><strong>Yijun Wang</strong>, Tao Wang, Ke Xu, Junjie Mao, Yerong Xu, Zheng Zhou, 2025, ApJ, "
-                        <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...689A.327W/abstract" target="_blank" style="color: #0366d6; text-decoration: none;">
-                Minor-merger-induced star formation rejuvenation in an elliptical radio-loud quasar host, 3C 59
-                        </a>
-                        ”
-                    </li>
+                    <ul class="papers-list">
+                        <!-- Paper 1 -->
+                        <li class="paper-item">
+                            <span class="paper-number">1</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Warm absorber outflows in radio-loud active galactic nucleus 3C 59</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Junjie Mao, Yerong Xu, Zhicheng He, Zheng Zhou, Yongquan Xue, Jiayi Chen, Chen Li, Fangzheng Shi, Missagh Mehdipour</div>
+                                <div class="paper-venue">A&A, 2025</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2025arXiv251006752W/abstract" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
                 </div>
             </section>
 
@@ -436,9 +505,9 @@
     </div>
 
     <script>
-        // Ensure video plays automatically like a GIF
+        // Ensure MOV video plays automatically like a GIF
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.querySelector('.gif-video');
+            const video = document.querySelector('.gif-mov');
             
             // Force video to play and loop
             video.play().catch(function(error) {
