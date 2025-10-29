@@ -248,41 +248,50 @@
         }
 
         .paper-item {
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 25px;
             padding: 15px;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 8px;
             border-left: 4px solid #0366d6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .paper-number {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
             background: #0366d6;
             color: white;
             border-radius: 50%;
             text-align: center;
-            line-height: 30px;
+            line-height: 32px;
             font-weight: bold;
             margin-right: 15px;
+            margin-top: 2px; /* 微调垂直对齐 */
+            font-size: 0.9em;
         }
 
         .paper-title {
             font-weight: bold;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            line-height: 1.4;
         }
 
         .paper-authors {
             color: #666;
             font-style: italic;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            font-size: 0.95em;
         }
 
         .paper-venue {
             color: #888;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
         }
 
         .paper-links a {
@@ -290,10 +299,20 @@
             text-decoration: none;
             margin-right: 15px;
             font-size: 0.9em;
+            padding: 4px 8px;
+            border: 1px solid #0366d6;
+            border-radius: 4px;
+            transition: all 0.2s ease;
         }
 
         .paper-links a:hover {
-            text-decoration: underline;
+            background-color: #0366d6;
+            color: white;
+            text-decoration: none;
+        }
+
+        .paper-content {
+            flex: 1;
         }
 
         /* Style for external links */
@@ -312,6 +331,31 @@
             background-color: rgba(3, 102, 214, 0.1);
             text-decoration: underline;
             transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .paper-item {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+    
+            .paper-number {
+                width: 28px;
+                height: 28px;
+                line-height: 28px;
+                margin-right: 12px;
+                font-size: 0.8em;
+            }
+    
+            .paper-title {
+                font-size: 1em;
+            }
+    
+            .paper-links a {
+                display: inline-block;
+                margin-bottom: 5px;
+                margin-right: 10px;
+            }
         }
 
         /* Make sure content takes full height */
@@ -377,7 +421,7 @@
             <!-- Video Section - MP4 shown as GIF -->
             <section id="video" class="content-section">
                 <div class="gif-section">
-                    <video class="gif-mov transparent-bg" 
+                    <video class="gif-mov" 
                            autoplay 
                            muted 
                            loop 
