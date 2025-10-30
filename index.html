@@ -846,8 +846,6 @@
             // Ensure video loops properly
             video.loop = true;
 
-            // Page view counter
-            updateViewCount();
         });
 
         // Page view counter function
@@ -915,6 +913,9 @@
                     item.classList.add('active');
                 }
             });
+            
+            // Page view counter
+            updateViewCount();
         });
 
         // Initial activation
