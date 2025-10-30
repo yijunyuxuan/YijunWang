@@ -143,9 +143,18 @@
             position: absolute;
             bottom: 2rem;
             font-size: 0.9rem;
-            background: rgba(0,0,0,0.5);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        #viewCount {
+            font-weight: bold;
+            color: #ff6b6b;
+            font-size: 1.1rem;
         }
 
         /* Right side - Content with seashell background */
@@ -848,18 +857,39 @@
 
         });
 
-        // Page view counter function
-        function updateViewCount() {
-            let views = localStorage.getItem('pageViews');
+        // Enhanced page view counter
+        function initializeEnhancedViewCounter() {
+            // Generate a unique session ID for this visit
+            let sessionId = sessionStorage.getItem('sessionId');
+            if (!sessionId) {
+                sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                sessionStorage.setItem('sessionId', sessionId);
+            }
+
+            // Check if we've already counted this session
+            let countedSessions = JSON.parse(localStorage.getItem('countedSessions') || '[]');
     
-            if (views) {
-                views = parseInt(views) + 1;
-            } else {
-                views = 1;
+            if (!countedSessions.includes(sessionId)) {
+                // This is a new session - count it
+                countedSessions.push(sessionId);
+        
+                // Keep only the last 1000 sessions to prevent storage from growing too large
+                if (countedSessions.length > 1000) {
+                    countedSessions = countedSessions.slice(-1000);
+                }
+        
+                localStorage.setItem('countedSessions', JSON.stringify(countedSessions));
+        
+                // Update total views
+                let totalViews = countedSessions.length;
+                localStorage.setItem('totalPageViews', totalViews);
             }
     
-            localStorage.setItem('pageViews', views);
-            document.getElementById('viewCount').textContent = views;
+            // Display the view count
+            let totalViews = localStorage.getItem('totalPageViews') || countedSessions.length;
+            document.getElementById('viewCount').textContent = totalViews;
+    
+            console.log('Total unique page views:', totalViews);
         }
 
         // Navigation click handler - jump to sections
@@ -887,8 +917,8 @@
                     });
                 }
             });
-            // Page view counter
-            updateViewCount();
+            // Initialize enhanced view counter
+        initializeEnhancedViewCounter();
         });
 
         // Update active nav item on scroll
