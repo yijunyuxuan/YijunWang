@@ -399,11 +399,14 @@
             /* Quality enhancements */
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
-            image-rendering: pixelated;
+            image-rendering: high-quality;
     
             /* Hardware acceleration */
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
+
+            /* Smooth scaling */
+            filter: blur(0); /* Counteract browser blur */
         }
 
         .project-info {
