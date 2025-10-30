@@ -139,6 +139,15 @@
             border-color: #ffeb3b;
         }
 
+        .page-views {
+            position: absolute;
+            bottom: 2rem;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
         /* Right side - Content with seashell background */
         .right-side {
             width: 80%;
@@ -494,6 +503,9 @@
                 <div class="nav-item" data-target="contact">CONTACT</div>
                 <div class="nav-item" data-target="life">LIFE</div>
             </div>
+            <div class="page-views">
+                <span id="viewCount">0</span> views
+            </div>
         </div>
 
         <!-- Right Side - Content -->
@@ -803,11 +815,11 @@
                 </h2>
                 <div class="section-content">
                     <h3>My Hometown</h3>
-                    <p>I was born in Ningwu (宁武) county in northern Shanxi Province, China, a place with incredibly beautiful scenery.</p>
-                    <p> The Fen River, which originates from my hometown, flows through the entire Shanxi Province and eventually empties into the Yellow River, serving as its second-largest tributary.</p>
-                    <p>Shanxi is one of the birthplaces of the Chinese nation, possessing the largest number of ancient architectural structures in China as well as a long-standing history and culture.</p>
+                    <p>I was born in Ningwu (宁武) county in northern Shanxi Province, China, a place with incredibly beautiful scenery <i class="fa-solid fa-mountain-sun"></i>.</p>
+                    <p> The Fen River <i class="fa-solid fa-water"></i>, which originates from my hometown, flows through the entire Shanxi Province and eventually empties into the Yellow River, serving as its second-largest tributary.</p>
+                    <p>Shanxi is one of the birthplaces of the Chinese nation, possessing the largest number of ancient architectural structures <i class="fa-solid fa-vihara"></i> in China as well as a long-standing history and culture.</p>
                     <h3>My Daily Life</h3>
-                    <p>In daily life, I usually enjoy painting <i class="fa-solid fa-palette"></i>, cycling <i class="fa-solid fa-person-biking"></i>, and running <i class="fa-solid fa-person-running"></i>, and now I'm learning to play the drums <i class="fa-solid fa-drum"></i> &#9835;&#9836;&#9834;.</p>
+                    <p>In daily life, I usually enjoy painting <i class="fa-solid fa-palette"></i>, cycling <i class="fa-solid fa-person-biking"></i>, and running <i class="fa-solid fa-person-running"></i>, and now I'm learning to play the drums <i class="fa-solid fa-drum"></i> &#9834;&#9835;&#9836;</p>
                     <div class="project-grid">
                         <div class="project-card">
                            <img src="hobbies.jpg" class="project-thumbnail">
@@ -834,6 +846,20 @@
             // Ensure video loops properly
             video.loop = true;
         });
+
+        // Page view counter function
+        function updateViewCount() {
+            let views = localStorage.getItem('pageViews');
+    
+            if (views) {
+                views = parseInt(views) + 1;
+            } else {
+                views = 1;
+            }
+    
+            localStorage.setItem('pageViews', views);
+            document.getElementById('viewCount').textContent = views;
+        }
 
         // Navigation click handler - jump to sections
         document.querySelectorAll('.nav-item').forEach(item => {
