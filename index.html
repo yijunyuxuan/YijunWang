@@ -396,6 +396,14 @@
             object-fit: contain;
             height: auto;
             max-height: 400px;
+            /* Quality enhancements */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            image-rendering: pixelated;
+    
+            /* Hardware acceleration */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .project-info {
