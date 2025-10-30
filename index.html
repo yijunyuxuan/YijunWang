@@ -149,6 +149,7 @@
             color: white;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
         }
 
         #viewCount {
@@ -513,7 +514,7 @@
                 <div class="nav-item" data-target="life">LIFE</div>
             </div>
             <div class="page-views">
-                <span id="viewCount">0</span> views
+                <span id="viewCount">0</span> global views
             </div>
         </div>
 
@@ -849,7 +850,7 @@
 
         });
 
-        // Global page view counter using CountAPI
+        // Global page view counter using CountAPI (works for all users worldwide)
         document.addEventListener('DOMContentLoaded', function() {
             // Smooth scrolling for navigation
             const navItems = document.querySelectorAll('.nav-item');
@@ -869,17 +870,24 @@
                 });
             });
 
+            // Change cursor for nav items
+            navItems.forEach(item => {
+                item.style.cursor = 'pointer';
+            });
+
             // Initialize global view counter
             initializeGlobalViewCounter();
         });
 
         async function initializeGlobalViewCounter() {
-            // Replace 'your-website-name' with your actual website name
+            // Using CountAPI - free service that works globally
+            // Replace 'your-unique-website-name' with your actual website name
             const NAMESPACE = 'your-personal-website';
-            const KEY = 'total-views';
+            const KEY = 'global-views';
     
             try {
                 // This will increment the counter and return the new value
+                // CountAPI works for users from all countries
                 const response = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`);
         
                 if (!response.ok) {
@@ -887,7 +895,12 @@
                 }
         
                 const data = await response.json();
-                document.getElementById('viewCount').textContent = data.value;
+        
+                // Format the number with commas (e.g., 1,234)
+                const formattedViews = data.value.toLocaleString();
+                document.getElementById('viewCount').textContent = formattedViews;
+        
+                console.log('Global view count updated:', data.value);
         
             } catch (error) {
                 console.log('Failed to update global counter, using local fallback:', error);
@@ -901,7 +914,9 @@
                 let localViews = localStorage.getItem('localViews');
                 localViews = localViews ? parseInt(localViews) + 1 : 1;
                 localStorage.setItem('localViews', localViews);
-                document.getElementById('viewCount').textContent = localViews;
+        
+                const formattedViews = localViews.toLocaleString();
+                document.getElementById('viewCount').textContent = formattedViews + ' (local)';
             } catch (e) {
                 // Ultimate fallback
                 document.getElementById('viewCount').textContent = '1';
