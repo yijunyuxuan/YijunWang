@@ -231,6 +231,7 @@
             
             /* 确保视频本身不添加任何背景 */
             background: transparent !important;
+            mix-blend-mode: normal;
             
             /* GIF-like behavior */
             -webkit-appearance: none;
@@ -623,6 +624,7 @@
                 <div class="nav-item" data-target="education">EDUCATION</div>
                 <div class="nav-item" data-target="skills">SKILLS</div>
                 <div class="nav-item" data-target="publications">PUBLICATIONS</div>
+                <div class="nav-item" data-target="funding">FUNDING</div>
                 <div class="nav-item" data-target="contact">CONTACT</div>
                 <div class="nav-item" data-target="life">LIFE</div>
             </div>
@@ -640,7 +642,7 @@
 
         <!-- Right Side - Content -->
         <div class="right-side">
-            <!-- Video Section - MP4 shown as GIF -->
+            <!-- Transparent MOV video: avoid opaque MP4 fallback -->
             <section id="video" class="content-section">
                 <div class="transparent-video-container">
                     <video class="transparent-mov" 
@@ -650,7 +652,7 @@
                            playsinline 
                            preload="auto">
                         <source src="your-video.mov" type="video/quicktime">
-                        <source src="your-video.mp4" type="video/mp4">
+                        <!-- Opaque MP4 fallback removed: use a transparency-capable WebM as fallback if needed. -->
                         Your browser does not support transparent videos.
                     </video>
                 </div>
@@ -997,7 +999,7 @@
                 </h2>
                 <div class="section-content">
                     <p><strong>Email:</strong>
-                        <a href="mailto:your-email@example.com">wangyijun@nju.edu.cn</a>
+                        <a href="mailto:wangyijun@nju.edu.cn">wangyijun@nju.edu.cn</a>
                     </p>
                     <p><strong>Location:</strong> Nanjing University (Xianlin Campus), 163 Xianlin Avenue, Qixia district, Nanjing, Jiangsu 210023, China</p>
                 </div>
