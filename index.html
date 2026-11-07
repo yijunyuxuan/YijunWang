@@ -642,19 +642,10 @@
 
         <!-- Right Side - Content -->
         <div class="right-side">
-            <!-- Transparent MOV video: avoid opaque MP4 fallback -->
+            <!-- Cross-browser transparent welcome animation -->
             <section id="video" class="content-section">
                 <div class="transparent-video-container">
-                    <video class="transparent-mov" 
-                           autoplay 
-                           muted 
-                           loop 
-                           playsinline 
-                           preload="auto">
-                        <source src="your-video.mov" type="video/quicktime">
-                        <!-- Opaque MP4 fallback removed: use a transparency-capable WebM as fallback if needed. -->
-                        Your browser does not support transparent videos.
-                    </video>
+                    <video class="transparent-mov" id="welcomeVideo" autoplay muted loop playsinline preload="auto" aria-label="Animated welcome greeting"></video>
                 </div>
             </section>
 
@@ -1030,6 +1021,26 @@
         // Ensure MOV video plays automatically like a GIF
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.querySelector('.transparent-mov');
+            // Safari: original transparent HEVC MOV. Chrome/Edge/Firefox: alpha VP9 WebM.
+            // Use browser detection only to prioritize the format; retry the other on error.
+            if (video) {
+                const ua = navigator.userAgent;
+                const safari = /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|FxiOS/i.test(ua);
+                const sources = safari
+                    ? ['your-video.mov', 'welcome_transparent.webm']
+                    : ['welcome_transparent.webm', 'your-video.mov'];
+                let sourceIndex = 0;
+                video.addEventListener('error', () => {
+                    if (++sourceIndex < sources.length) {
+                        video.src = sources[sourceIndex];
+                        video.load();
+                        video.play().catch(() => {});
+                    }
+                });
+                video.src = sources[0];
+                video.load();
+            }
+
             
             // Force video to play and loop
             if (!video) return;
