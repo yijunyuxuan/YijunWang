@@ -558,7 +558,8 @@
             }
             
             .left-side {
-                height: 50vh;
+                height: auto;
+                min-height: 50vh;
             }
             
             .right-side {
@@ -573,6 +574,34 @@
                 height: 400px;
             }
         }
+
+        /* Publications: visual research gallery */
+        #publications { justify-content: flex-start; }
+        .pub-intro { color: #687487; font-size: 1rem; margin: 12px 0 22px; }
+        .publication-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+        .publication-card { min-width: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 13px; background: rgba(255,255,255,.93); border: 1px solid rgba(37,76,116,.15); box-shadow: 0 5px 20px rgba(17,43,75,.12); transition: transform .2s ease, box-shadow .2s ease; }
+        .publication-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(17,43,75,.18); }
+        .publication-visual { position: relative; aspect-ratio: 16/10; background: radial-gradient(circle at 45% 50%, #15355b, #061326 75%); overflow: hidden; }
+        .publication-visual img { width: 100%; height: 100%; display: block; object-fit: cover; }
+        .publication-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 18px; text-align: center; color: #a9c8e7; font-size: .95rem; line-height: 1.5; letter-spacing: .02em; }
+        .publication-visual img:not([src]) { display: none; }
+        .publication-visual img[src] + .publication-placeholder { display: none; }
+        .publication-details { padding: 17px 17px 19px; display: flex; flex: 1; flex-direction: column; }
+        .publication-meta { font-size: .76rem; font-weight: 700; color: #376e9e; letter-spacing: .06em; margin-bottom: 9px; }
+        #publications .publication-title { color: #1a2f47; font-size: 1rem; font-weight: 700; line-height: 1.45; margin: 0 0 11px; overflow-wrap: anywhere; }
+        #publications .publication-authors { font-size: .81rem; color: #526275; font-style: normal; line-height: 1.55; margin: 0 0 11px; overflow-wrap: anywhere; }
+        #publications .publication-authors strong { color: #235c90; }
+        #publications .publication-venue { font-size: .82rem; color: #718094; margin: 0 0 14px; }
+        #publications .publication-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        #publications .publication-links a { display: inline-block; margin: 0; padding: 5px 10px; border-radius: 5px; border: 1px solid #b9d3ed; color: #185c9b; background: #f5faff; text-decoration: none; font-size: .8rem; }
+        #publications .publication-links a:hover { color: #fff; background: #185c9b; }
+        .publication-more { margin-top: 34px; }
+        .publication-more h3 { color: #30445a; font-size: 1.25rem; margin: 0 0 14px; }
+        .publication-more .papers-list { margin-top: 0; }
+        .publication-more .paper-item { font-size: .87rem; }
+        @media (max-width: 1200px) { .publication-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 700px) { .publication-grid { grid-template-columns: 1fr; } .right-side { padding: 24px 16px; } }
+        @media (prefers-reduced-motion: reduce) { .publication-card { transition: none; } }
     </style>
 </head>
 <body>
@@ -597,20 +626,16 @@
                 <div class="nav-item" data-target="contact">CONTACT</div>
                 <div class="nav-item" data-target="life">LIFE</div>
             </div>
-            <div class="like-section">
-                <button id="likeButton" class="like-button">
-                    <span class="like-text">Thank you for browsing!</span>
+            <div class="like-section" aria-label="Website appreciation">
+                <button id="likeButton" class="like-button" type="button">
+                    <span class="like-icon" aria-hidden="true">❤️</span>
+                    <span class="like-text">Like this website</span>
                 </button>
-            </div>
-            <!-- <div class="like-section">
-                <button id="likeButton" class="like-button">
-                    <span class="like-icon">❤️</span>
-                    <span class="like-text">Like</span>
-                </button>
-                <div class="like-count">
-                    <span id="likeCount">Loading...</span> likes
+                <div class="like-count" aria-live="polite">
+                    <span id="likeCount">—</span> <span id="likeCountLabel">likes</span>
                 </div>
-            </div> -->
+                <div id="likeStatus" style="color:#fff;font-size:.73rem;opacity:.8;margin-top:5px;"></div>
+            </div>
         </div>
 
         <!-- Right Side - Content -->
@@ -623,7 +648,7 @@
                            muted 
                            loop 
                            playsinline 
-                           preload="auto"
+                           preload="auto">
                         <source src="your-video.mov" type="video/quicktime">
                         <source src="your-video.mp4" type="video/mp4">
                         Your browser does not support transparent videos.
@@ -653,12 +678,12 @@
                 </h2>
                 <div class="section-content">
                     <h3>Special Associate Researcher @ Nanjing University (2024-Present)</h3>
-                    <p> Working in Dr. Tao Wang's group.</p>
+                    <p> Working in Prof. Tao Wang's group.</p>
                     <p>Leading works about minor-merger induced star formation rejuvenation in an elliptical radio-loud AGN host 3C 59, warm absorber outflows around the central engine of 3C 59, and radio AGN feedback to the surrounding satellite galaxies.</p>
                 </div>
                  <div class="section-content">
                     <h3>Special Assistant Researcher @ Nanjing University (2021-2024)</h3>
-                    <p> Working in Dr. Tao Wang's group.</p>
+                    <p> Working in Prof. Tao Wang's group.</p>
                     <p>Leading works about density profile of the ambient circumnuclear medium around supermassive black hole, and radio activities of AGN from accretion disk scale to host galaxy scale.</p>
                 </div>
           </section>
@@ -669,15 +694,15 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                 </h2>
                 <div class="section-content">
-                    <h3>Visiting PhD student in Astrophysics (2019-2020)</h3>
-                    <p>@ Space Research Organisation Netherlands (SRON) & Leiden University</p>
-                    <p>Studying in Dr. Jelle Kaastra's group.</p>
-                    <p> Participating a series of works on warm absorber outflows and obscured winds in NGC 3227, and leading one of the projects.</p>
-                    
                     <h3>Doctor of Science in Astrophysics (2014-2021)</h3>
                     <p>@ University of Science and Technology of China (USTC)</p>
-                    <p>Studying in Dr. Yongquan Xue's group.</p>
+                    <p>Studying in Prof. Yongquan Xue's group.</p>
                     <p> Leading works on X-ray spectral variability in blazars.</p>
+                    
+                    <h3>Visiting PhD student in Astrophysics (2019-2020)</h3>
+                    <p>@ Space Research Organisation Netherlands (SRON) & Leiden University</p>
+                    <p>Studying in Prof. Jelle Kaastra's group.</p>
+                    <p> Participating a series of works on warm absorber outflows and obscured winds in NGC 3227, and leading one of the projects.</p>
                     
                     <h3>Bachelor of Science in Agriculture (2010-2014)</h3>
                     <p>@ Huazhong Agriculture Univerisy (HZAU)</p>
@@ -708,196 +733,263 @@
                 </div>
             </section>
 
-            <!-- Publications Section -->
+            <!-- Publications Section: first-author research gallery -->
             <section id="publications" class="content-section">
-                <h2 class="section-title">Publications
-                    <i class="fa-regular fa-pen-to-square"></i>
-                    </h2>
-                <div class="section-content">
+                <h2 class="section-title">Publications <i class="fa-regular fa-pen-to-square"></i></h2>
+                <p class="pub-intro">First-author research papers · Scientific illustrations and publication details</p>
+                <div class="publication-grid">
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-01.webp" alt="Conceptual illustration: Satellite quenching by radio jets of central galaxies in galaxy groups" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 01</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 01 · 2026</div>
+                            <h3 class="publication-title">Satellite quenching by radio jets of central galaxies in galaxy groups</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Tao Wang, Dingyi Zhao, Yingjie Peng, Mark T. Sargent, Ziwen Zhang, Houjun Mo, Feng Yuan, Zhaozhou Li, Lingyu Wang, Yu Qiu, Yangyao Chen, Ke Xu</div>
+                            <p class="publication-venue">Submitted, 2026</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260702801W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2607.02801" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-02.webp" alt="Conceptual illustration: Warm absorber outflows in radio-loud active galactic nucleus 3C 59" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 02</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 02 · 2026</div>
+                            <h3 class="publication-title">Warm absorber outflows in radio-loud active galactic nucleus 3C 59</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Tao Wang, Junjie Mao, Yerong Xu, Zhicheng He, Zheng Zhou, Yongquan Xue, Jiayi Chen, Chen Li, Fangzheng Shi, Missagh Mehdipour</div>
+                            <p class="publication-venue">A&amp;A, 2026</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2026A%26A...705A..95W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2510.06752" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-03.webp" alt="Conceptual illustration: Minor-merger induced star formation rejuvenation in an elliptical radio-loud quasar host, 3C 59" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 03</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 03 · 2025</div>
+                            <h3 class="publication-title">Minor-merger induced star formation rejuvenation in an elliptical radio-loud quasar host, 3C 59</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Tao Wang, Ke Xu, Junjie Mao, Yerong Xu, Zheng Zhou</div>
+                            <p class="publication-venue">ApJ, 2025</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...980..107W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2412.11367" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-04.webp" alt="Conceptual illustration: The fundamental plane of black hole activity for low-luminosity radio active galactic nuclei across 0 &lt; z &lt; 4" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 04</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 04 · 2024</div>
+                            <h3 class="publication-title">The fundamental plane of black hole activity for low-luminosity radio active galactic nuclei across 0 &lt; z &lt; 4</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Tao Wang, Luis C. Ho, Yuxing Zhong, Bin Luo</div>
+                            <p class="publication-venue">A&amp;A, 2024</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...689A.327W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2402.17991" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-05.webp" alt="Conceptual illustration: Cosmic evolution of radio-excess active galactic nuclei in quiescent and star-forming galaxies across 0 &lt; z &lt; 4" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 05</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 05 · 2024</div>
+                            <h3 class="publication-title">Cosmic evolution of radio-excess active galactic nuclei in quiescent and star-forming galaxies across 0 &lt; z &lt; 4</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Tao Wang, Daizhong Liu, Mark T. Sargent, Fangyou Gao, David M. Alexander, Wiphu Rujopakarn, Luwenjia Zhou, Emanuele Daddi, Ke Xu, Kotaro Kohno, Shuowen Jin</div>
+                            <p class="publication-venue">A&amp;A, 2024</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...685A..79W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2401.04924" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-06.webp" alt="Conceptual illustration: Density profile of the ambient circumnuclear medium in Seyfert 1 galaxies" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 06</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 06 · 2022</div>
+                            <h3 class="publication-title">Density profile of the ambient circumnuclear medium in Seyfert 1 galaxies</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Zhicheng He, Junjie Mao, Jelle Kaastra, Yongquan Xue, and Mehdipour Missagh</div>
+                            <p class="publication-venue">ApJ, 2022</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2022ApJ...928....7W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2202.01502" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-07.webp" alt="Conceptual illustration: Transient obscuration event captured in NGC 3227 II. Warm absorbers and obscuration events in archival XMM-Newton and NuSTAR observations" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 07</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 07 · 2022</div>
+                            <h3 class="publication-title">Transient obscuration event captured in NGC 3227 II. Warm absorbers and obscuration events in archival XMM-Newton and NuSTAR observations</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Jelle Kaastra, Mehdipour Missagh, Junjie Mao, Elisa Costantini, Gerard A. Kriss, Ciro Pinto, Gabriele Ponti, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, Barbara De Marco, Sam Grafton-Waters, Pierre Olivier Petrucci, Jacobo Ebrero, Dominic James Walton, Shai Kaspi, Yongquan Xue, Stáphane Paltani, Laura di Gesu, Zhicheng He</div>
+                            <p class="publication-venue">A&amp;A, 2022</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2022A%26A...657A..77W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2110.07861" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-08.webp" alt="Conceptual illustration: X-ray spectral variations of synchrotron peak in BL Lacs" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 08</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 08 · 2019</div>
+                            <h3 class="publication-title">X-ray spectral variations of synchrotron peak in BL Lacs</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Shifu Zhu, Yongquan Xue, Minfeng Gu, Shanshan Weng, and Huynh Anh N. Le</div>
+                            <p class="publication-venue">ApJ, 2019</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...885....8W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/1909.06801" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                    <article class="publication-card">
+                        <div class="publication-visual">
+                            <!-- Replace the image file below with this paper's conceptual illustration -->
+                            <img src="images/publications/paper-09.webp" alt="Conceptual illustration: Systematic investigation of X-ray spectral variability of TeV blazars during flares in the RXTE era" loading="lazy" onerror="this.removeAttribute('src')">
+                            <div class="publication-placeholder">Scientific illustration<br>Paper 09</div>
+                        </div>
+                        <div class="publication-details">
+                            <div class="publication-meta">PAPER 09 · 2018</div>
+                            <h3 class="publication-title">Systematic investigation of X-ray spectral variability of TeV blazars during flares in the RXTE era</h3>
+                            <div class="publication-authors"><strong>Yijun Wang</strong>, Yongquan Xue, Shifu Zhu, and Junhui Fan</div>
+                            <p class="publication-venue">ApJ, 2018</p>
+                            <div class="publication-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2018ApJ...867...68W/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/1809.08036" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+                        </div>
+                    </article>
+                </div>
+                <div class="publication-more">
+                    <h3>Book Chapter &amp; Collaborative Publications</h3>
                     <ul class="papers-list">
-                        <!-- Paper 1 -->
                         <li class="paper-item">
-                            <span class="paper-number">1</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Warm absorber outflows in radio-loud active galactic nucleus 3C 59</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Junjie Mao, Yerong Xu, Zhicheng He, Zheng Zhou, Yongquan Xue, Jiayi Chen, Chen Li, Fangzheng Shi, Missagh Mehdipour</div>
-                                <div class="paper-venue">A&A, 2025</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2025arXiv251006752W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2510.06752" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 2 -->
+<span class="paper-number">10</span>
+<div class="paper-content">
+<div class="paper-title">Chapter "High-Resolution Spectral Analysis" in Book "High-Resolution X-ray Spectroscopy: Instrumentation, Data Analysis, and Science"</div>
+<div class="paper-authors"><strong>Yijun Wang</strong>, Jelle de Plaa</div>
+<div class="paper-venue">Springer, 2023</div>
+<div class="paper-links">
+<a href="https://link.springer.com/chapter/10.1007/978-981-99-4409-5_6" target="_blank" rel="noopener noreferrer">Springer link of this Chapter</a>
+<a href="https://link.springer.com/book/10.1007/978-981-99-4409-5" target="_blank" rel="noopener noreferrer">Springer link of the Book</a>
+</div>
+</div>
+</li>
                         <li class="paper-item">
-                            <span class="paper-number">2</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Minor-merger induced star formation rejuvenation in an elliptical radio-loud quasar host, 3C 59</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Ke Xu, Junjie Mao, Yerong Xu, Zheng Zhou</div>
-                                <div class="paper-venue">ApJ, 2025</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...980..107W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2412.11367" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <!-- Paper 3 -->
+<span class="paper-number">11</span>
+<div class="paper-content">
+<div class="paper-title">An empirical model of the extragalactic radio background</div>
+<div class="paper-authors">Fangyou Gao, Tao Wang, <strong>Yijun Wang</strong></div>
+<div class="paper-venue">A&amp;A, 2025</div>
+<div class="paper-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2025A%26A...694A.261G/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2412.08995" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+</div>
+</li>
                         <li class="paper-item">
-                            <span class="paper-number">3</span>
-                            <div class="paper-content">
-                                <div class="paper-title">The fundamental plane of black hole activity for low-luminosity radio active galactic nuclei across 0 < z < 4</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Luis C. Ho, Yuxing Zhong, Bin Luo</div>
-                                <div class="paper-venue">A&A, 2024</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...689A.327W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2402.17991" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 4 -->
+<span class="paper-number">12</span>
+<div class="paper-content">
+<div class="paper-title">On the connection between the repeated X-ray quasiperiodic oscillation and warm absorber in the active galaxy RE J1034+396</div>
+<div class="paper-authors">Zheng Zhou, Junjie Mao, Taotao Fang, <strong>Yijun Wang</strong></div>
+<div class="paper-venue">ApJ, 2024</div>
+<div class="paper-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2024ApJ...967..105Z/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2404.01377" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+</div>
+</li>
                         <li class="paper-item">
-                            <span class="paper-number">4</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Cosmic evolution of radio-excess active galactic nuclei in quiescent and star-forming galaxies across 0 < z < 4</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Daizhong Liu, Mark T. Sargent, Fangyou Gao, David M. Alexander, Wiphu Rujopakarn, Luwenjia Zhou, Emanuele Daddi, Ke Xu, Kotaro Kohno, Shuowen Jin</div>
-                                <div class="paper-venue">A&A, 2024</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...685A..79W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2401.04924" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 5 -->
+<span class="paper-number">13</span>
+<div class="paper-content">
+<div class="paper-title">Transient obscuration event captured in NGC 3227. I. Continuum model for the broadband spectral energy distribution</div>
+<div class="paper-authors">Missagh Mehdipour, G. A. Kriss, Jelle Kaastra, <strong>Yijun Wang</strong>, Junjie Mao, Elisa Costantini, N. Arav, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, M. Brotherton, M. Cappi, Barbara De Marco, Laura di Gesu, Jacobo Ebrero, Sam Grafton-Waters, Shai Kaspi, G. Matt, Stáphane Paltani, Pierre Olivier Petrucci, Ciro Pinto, Gabriele Ponti, F. Ursini, Dominic James Walton</div>
+<div class="paper-venue">A&amp;A, 2021</div>
+<div class="paper-links">
+<a href="https://ui.adsabs.harvard.edu/abs/2021A%26A...652A.150M/abstract" target="_blank" rel="noopener noreferrer">ADS</a>
+<a href="https://arxiv.org/abs/2106.14957" target="_blank" rel="noopener noreferrer">arXiv</a>
+</div>
+</div>
+</li>
                         <li class="paper-item">
-                            <span class="paper-number">5</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Density profile of the ambient circumnuclear medium in Seyfert 1 galaxies</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Zhicheng He, Junjie Mao, Jelle Kaastra, Yongquan Xue, and Mehdipour Missagh</div>
-                                <div class="paper-venue">ApJ, 2022</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2022ApJ...928....7W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2202.01502" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 6 -->
-                        <li class="paper-item">
-                            <span class="paper-number">6</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Transient obscuration event captured in NGC 3227 II. Warm absorbers and obscuration events in archival XMM-Newton and NuSTAR observations</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Jelle Kaastra, Mehdipour Missagh, Junjie Mao, Elisa Costantini, Gerard A. Kriss, Ciro Pinto, Gabriele Ponti, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, Barbara De Marco, Sam Grafton-Waters, Pierre Olivier Petrucci, Jacobo Ebrero, Dominic James Walton, Shai Kaspi, Yongquan Xue, Stáphane Paltani, Laura di Gesu, Zhicheng He</div>
-                                <div class="paper-venue">A&A, 2022</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2022A%26A...657A..77W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2110.07861" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 7 -->
-                        <li class="paper-item">
-                            <span class="paper-number">7</span>
-                            <div class="paper-content">
-                                <div class="paper-title">X-ray spectral variations of synchrotron peak in BL Lacs</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Shifu Zhu, Yongquan Xue, Minfeng Gu, Shanshan Weng, and Huynh Anh N. Le</div>
-                                <div class="paper-venue">ApJ, 2019</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...885....8W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/1909.06801" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 8 -->
-                        <li class="paper-item">
-                            <span class="paper-number">8</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Systematic investigation of X-ray spectral variability of TeV blazars during flares in the RXTE era</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Yongquan Xue, Shifu Zhu, and Junhui Fan</div>
-                                <div class="paper-venue">ApJ, 2018</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2018ApJ...867...68W/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/1809.08036" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 9 -->
-                        <li class="paper-item">
-                            <span class="paper-number">9</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Chapter "High-Resolution Spectral Analysis" in Book "High-Resolution X-ray Spectroscopy: Instrumentation, Data Analysis, and Science"</div>
-                                <div class="paper-authors"><strong>Yijun Wang</strong>, Jelle de Plaa</div>
-                                <div class="paper-venue">Springer, 2023</div>
-                                <div class="paper-links">
-                                    <a href="https://link.springer.com/chapter/10.1007/978-981-99-4409-5_6" target="_blank">Springer link of this Chapter</a>
-                                    <a href="https://link.springer.com/book/10.1007/978-981-99-4409-5" target="_blank">Springer link of the Book</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 10 -->
-                        <li class="paper-item">
-                            <span class="paper-number">10</span>
-                            <div class="paper-content">
-                                <div class="paper-title">An empirical model of the extragalactic radio background</div>
-                                <div class="paper-authors">Fangyou Gao, Tao Wang, <strong>Yijun Wang</strong></div>
-                                <div class="paper-venue">A&A, 2025</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2025A%26A...694A.261G/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2412.08995" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 11 -->
-                        <li class="paper-item">
-                            <span class="paper-number">11</span>
-                            <div class="paper-content">
-                                <div class="paper-title">On the connection between the repeated X-ray quasiperiodic oscillation and warm absorber in the active galaxy RE J1034+396</div>
-                                <div class="paper-authors">Zheng Zhou, Junjie Mao, Taotao Fang, <strong>Yijun Wang</strong></div>
-                                <div class="paper-venue">ApJ, 2024</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2024ApJ...967..105Z/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2404.01377" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 12 -->
-                        <li class="paper-item">
-                            <span class="paper-number">12</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Transient obscuration event captured in NGC 3227. I. Continuum model for the broadband spectral energy distribution</div>
-                                <div class="paper-authors">Missagh Mehdipour, G. A. Kriss, Jelle Kaastra, <strong>Yijun Wang</strong>, Junjie Mao, Elisa Costantini, N. Arav, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, M. Brotherton, M. Cappi, Barbara De Marco, Laura di Gesu, Jacobo Ebrero, Sam Grafton-Waters, Shai Kaspi, G. Matt, Stáphane Paltani, Pierre Olivier Petrucci, Ciro Pinto, Gabriele Ponti, F. Ursini, Dominic James Walton</div>
-                                <div class="paper-venue">A&A, 2021</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/abs/2021A%26A...652A.150M/abstract" target="_blank">ADS</a>
-                                    <a href="https://arxiv.org/abs/2106.14957" target="_blank">arXiv</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Paper 13 -->
-                        <li class="paper-item">
-                            <span class="paper-number">13</span>
-                            <div class="paper-content">
-                                <div class="paper-title">Other collaborative works:</div>
-                                <div class="paper-links">
-                                    <a href="https://ui.adsabs.harvard.edu/user/libraries/TSAPl_nSSISjjT6ybgSaOA" target="_blank">ADS Library</a>
-                                </div>
-                            </div>
-                        </li>
-
+<span class="paper-number">14</span>
+<div class="paper-content">
+<div class="paper-title">Other collaborative works:</div>
+<div class="paper-links">
+<a href="https://ui.adsabs.harvard.edu/user/libraries/TSAPl_nSSISjjT6ybgSaOA" target="_blank" rel="noopener noreferrer">ADS Library</a>
+</div>
+</div>
+</li>
                     </ul>
                 </div>
             </section>
 
+            <!-- Funding Section -->
+            <section id="funding" class="content-section">
+                <h2 class="section-title">Funding
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </h2>
+                <div class="section-content">
+                    <h3>Research Grants</h3>
+                    <ul>
+                        <li>
+                              National Natural Science Foundation of China
+                              (NSFC), Young Scientists Fund
+                              <strong>(Principal Investigator)</strong>
+                        </li>
+                        <li>
+                              Jiangsu Provincial Research Grant
+                              <strong>(Principal Investigator)</strong>
+                        </li>
+                    </ul>
+
+                    <h3>Fellowships &amp; Scholarships</h3>
+                    <ul>
+                        <li>
+                              <strong>2019</strong> &mdash;
+                              China Scholarship Council (CSC) Scholarship
+                        </li>
+                        <li>
+                              <strong>2012</strong> &mdash;
+                              National Scholarship,
+                              Ministry of Education of China
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            
             <!-- Contact Section -->
             <section id="contact" class="content-section">
                 <h2 class="section-title">Contact
@@ -935,9 +1027,10 @@
     <script>
         // Ensure MOV video plays automatically like a GIF
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.querySelector('.gif-mov');
+            const video = document.querySelector('.transparent-mov');
             
             // Force video to play and loop
+            if (!video) return;
             video.play().catch(function(error) {
                 // If autoplay fails, play on first user interaction
                 document.addEventListener('click', function() {
@@ -952,29 +1045,6 @@
 
         // Global like counter using CountAPI
         document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for navigation
-            const navItems = document.querySelectorAll('.nav-item');
-    
-            navItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-            
-                    if (targetSection) {
-                        targetSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // Change cursor for nav items
-            navItems.forEach(item => {
-                item.style.cursor = 'pointer';
-            });
-
             // Initialize like counter
             initializeLikeCounter();
         });
@@ -982,7 +1052,7 @@
         async function initializeLikeCounter() {
             // Using CountAPI for global like counting
             // Replace 'your-unique-website-name' with your actual website name
-            const NAMESPACE = 'your-personal-website-likes';
+            const NAMESPACE = 'yijunyuxuan-github-io-yijunwang';
             const KEY = 'total-likes';
     
             try {
@@ -1003,7 +1073,8 @@
                 setupLikeButton(NAMESPACE, KEY, currentLikes);
         
             } catch (error) {
-                console.log('Failed to fetch like count, using local storage:', error);
+                console.log('Shared like counter unavailable:', error);
+                document.getElementById('likeStatus').textContent = 'Local count (shared counter unavailable)';
                 setupLocalLikeCounter();
             }
         }
@@ -1053,15 +1124,25 @@
             
                 } catch (error) {
                     console.log('Failed to update like count:', error);
-                    // Fallback to local storage
-                    updateLocalLikeCount();
+                    // Do not misrepresent a local like as a global like.
+                    document.getElementById('likeStatus').textContent = 'Shared counter unavailable; using local count';
+                    setupLocalLikeCounterAfterFailure();
                 }
             });
         }
 
+        function setupLocalLikeCounterAfterFailure() {
+            const button = document.getElementById('likeButton');
+            button.disabled = false;
+            button.replaceWith(button.cloneNode(true));
+            setupLocalLikeCounter();
+            document.getElementById('likeButton').click();
+        }
+
         function updateLikeDisplay(count) {
             const likeCount = document.getElementById('likeCount');
-            const formattedCount = count.toLocaleString();
+            const formattedCount = Number(count).toLocaleString();
+            if (!likeCount) return;
             likeCount.textContent = formattedCount;
     
             // Add pulse animation
@@ -1168,13 +1249,7 @@
                 // Scroll to target section
                 const targetSection = document.getElementById(targetId);
                 if (targetSection) {
-                    const rightSide = document.querySelector('.right-side');
-                    const sectionTop = targetSection.offsetTop;
-                    
-                    rightSide.scrollTo({
-                        top: sectionTop,
-                        behavior: 'smooth'
-                    });
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
