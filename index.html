@@ -545,6 +545,30 @@
         @media (max-width: 1200px) { .publication-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
         @media (max-width: 700px) { .publication-grid { grid-template-columns: 1fr; } .right-side { padding: 24px 16px; } }
         @media (prefers-reduced-motion: reduce) { .publication-card { transition: none; } }
+        /* Publication thumbnails: enlarge on hover without changing card layout */
+        .publication-card { overflow: visible; position: relative; }
+        .publication-card:hover { z-index: 20; }
+        .publication-visual { overflow: visible; z-index: 1; }
+        .publication-visual img {
+            position: relative;
+            z-index: 1;
+            transform-origin: center center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+        .publication-visual img:hover {
+            transform: scale(1.8);
+            z-index: 30;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+            border-radius: 6px;
+        }
+        @media (max-width: 700px) {
+            .publication-visual img:hover { transform: scale(1.15); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .publication-visual img { transition: none; }
+        }
+
     </style>
 </head>
 <body>
