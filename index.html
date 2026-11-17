@@ -675,6 +675,134 @@
             #publications .paper-resource { padding-left: 32px; }
         }
 
+
+        /* Publication numbering shares the exact title typography. */
+        #publications .paper-number,
+        #publications .paper-title {
+            font-family: inherit;
+            font-size: 1.1em;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #252525;
+        }
+        #publications .paper-number::before { font: inherit; }
+
+        /* Astronomy-inspired sidebar: deep blue, soft glass and cyan accents. */
+        .left-side {
+            padding: 30px 18px 22px;
+            background-color: #0b1830;
+            border-right: 1px solid rgba(159, 209, 255, .2);
+            box-shadow: 5px 0 28px rgba(4, 16, 36, .16);
+            isolation: isolate;
+        }
+        .left-side::before {
+            position: fixed;
+            width: 20%;
+            right: auto;
+            background: linear-gradient(165deg, rgba(8, 24, 49, .72), rgba(12, 38, 64, .6) 48%, rgba(5, 16, 34, .9));
+            pointer-events: none;
+        }
+        .left-side .profile-photo {
+            width: min(168px, 85%);
+            height: auto;
+            aspect-ratio: 1;
+            flex-shrink: 0;
+            border: 3px solid rgba(211, 236, 255, .88);
+            box-shadow: 0 0 0 7px rgba(123, 191, 242, .09), 0 12px 30px rgba(0, 0, 0, .25);
+            margin-bottom: 23px;
+        }
+        .left-side .name {
+            font-size: clamp(1.35rem, 2.2vw, 2.15rem);
+            letter-spacing: .015em;
+            margin-bottom: 8px;
+            color: #f4f9ff;
+        }
+        .left-side .name-CN {
+            font-size: 1.35rem;
+            letter-spacing: .2em;
+            padding-left: .2em;
+            color: #bcd8ee;
+            margin-bottom: 22px;
+        }
+        .left-side .nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 0;
+            padding: 16px 0;
+            border-top: 1px solid rgba(183, 219, 249, .18);
+            border-bottom: 1px solid rgba(183, 219, 249, .18);
+        }
+        .left-side .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            margin: 0;
+            padding: 12px 14px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: transparent;
+            color: #d9e8f5;
+            font-family: inherit;
+            font-size: .83rem;
+            font-weight: 600;
+            letter-spacing: .055em;
+            line-height: 1.4;
+            text-align: left;
+            transform: none;
+            transition: background .2s ease, border-color .2s ease, color .2s ease;
+        }
+        .left-side .nav-item i {
+            flex: 0 0 20px;
+            width: 20px;
+            font-size: .95rem;
+            text-align: center;
+            color: #8db5d5;
+        }
+        .left-side .nav-item:hover {
+            background: rgba(176, 215, 249, .1);
+            border-color: rgba(176, 215, 249, .14);
+            color: #fff;
+            transform: none;
+        }
+        .left-side .nav-item.active {
+            background: linear-gradient(100deg, rgba(69, 168, 231, .25), rgba(112, 194, 246, .07));
+            border-color: rgba(126, 204, 252, .3);
+            box-shadow: inset 3px 0 0 #8bd8ff;
+            color: #fff;
+            font-weight: 700;
+        }
+        .left-side .nav-item.active i { color: #9cddff; }
+        .left-side .nav-item:focus-visible {
+            outline: 2px solid #9cddff;
+            outline-offset: 3px;
+        }
+        .left-side .like-section {
+            position: relative;
+            bottom: auto;
+            width: 100%;
+            min-width: 0;
+            margin-top: auto;
+            padding: 24px 0 0;
+        }
+        .left-side .like-button { max-width: 100%; padding: 11px 15px; font-size: .85rem; }
+        @media (max-width: 768px) {
+            .left-side { padding: 26px 20px; }
+            .left-side::before { position: absolute; width: 100%; }
+            .left-side .name { font-size: 2rem; }
+            .left-side .nav-items {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: 480px;
+            }
+            .left-side .nav-item { font-size: .75rem; padding: 11px 10px; gap: 8px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .left-side .nav-item { transition: none; }
+        }
+
     </style>
 </head>
 <body>
@@ -690,15 +818,15 @@
             
             <!-- Navigation Items - no background boxes -->
             <div class="nav-items">
-                <div class="nav-item active" data-target="video">INTRODUCTION</div>
-                <div class="nav-item" data-target="about">ABOUT ME</div>
-                <div class="nav-item" data-target="experience">EXPERIENCE</div>
-                <div class="nav-item" data-target="education">EDUCATION</div>
-                <div class="nav-item" data-target="skills">SKILLS</div>
-                <div class="nav-item" data-target="publications">PUBLICATIONS</div>
-                <div class="nav-item" data-target="funding">FUNDING</div>
-                <div class="nav-item" data-target="contact">CONTACT</div>
-                <div class="nav-item" data-target="life">LIFE</div>
+                <button type="button" class="nav-item active" data-target="video"><i class="fa-solid fa-star" aria-hidden="true"></i><span>INTRODUCTION</span></button>
+                <button type="button" class="nav-item" data-target="about"><i class="fa-solid fa-user" aria-hidden="true"></i><span>ABOUT ME</span></button>
+                <button type="button" class="nav-item" data-target="experience"><i class="fa-solid fa-briefcase" aria-hidden="true"></i><span>EXPERIENCE</span></button>
+                <button type="button" class="nav-item" data-target="education"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><span>EDUCATION</span></button>
+                <button type="button" class="nav-item" data-target="skills"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i><span>SKILLS</span></button>
+                <button type="button" class="nav-item" data-target="publications"><i class="fa-solid fa-book-open" aria-hidden="true"></i><span>PUBLICATIONS</span></button>
+                <button type="button" class="nav-item" data-target="funding"><i class="fa-solid fa-wallet" aria-hidden="true"></i><span>FUNDING</span></button>
+                <button type="button" class="nav-item" data-target="contact"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span>CONTACT</span></button>
+                <button type="button" class="nav-item" data-target="life"><i class="fa-solid fa-leaf" aria-hidden="true"></i><span>LIFE</span></button>
             </div>
             <div class="like-section" aria-label="Website appreciation">
                 <button id="likeButton" class="like-button" type="button" aria-pressed="false">
