@@ -803,6 +803,92 @@
             .left-side .nav-item { transition: none; }
         }
 
+
+        /* Larger portrait and lettering, with a calligraphic Chinese name. */
+        .left-side .profile-photo { width: min(201.6px, 100%); }
+        .left-side .name { font-size: clamp(1.62rem, 2.64vw, 2.58rem); }
+        .left-side .name-CN {
+            font-family: "Kaiti SC", "STKaiti", "KaiTi", "楷体", "Noto Serif CJK SC", serif;
+            font-size: 1.62rem;
+            font-weight: 600;
+            letter-spacing: .14em;
+            padding-left: .14em;
+        }
+        .left-side .nav-item {
+            font-size: .996rem;
+            letter-spacing: .025em;
+            gap: 9px;
+            padding: 12px 10px;
+            overflow-wrap: anywhere;
+        }
+        .left-side .nav-item i { font-size: 1.14rem; }
+        #publications .paper-authors strong { color: #8a2874; }
+
+        /* Mobile layout: a compact header, touch-friendly navigation and one page scroll. */
+        @media (max-width: 768px) {
+            html, body { height: auto; min-height: 100%; overflow: visible; }
+            .container { height: auto; min-height: 100vh; width: 100%; display: block; }
+            .left-side {
+                position: relative;
+                width: 100%;
+                height: auto;
+                min-height: 0;
+                overflow: visible;
+                padding: 30px 20px 24px;
+            }
+            .left-side::before { position: absolute; width: 100%; }
+            .left-side .profile-photo { width: min(201.6px, 60vw); margin-bottom: 20px; }
+            .left-side .name { font-size: 2.4rem; }
+            .left-side .name-CN { font-size: 1.62rem; margin-bottom: 22px; }
+            .left-side .nav-items {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                width: 100%;
+                max-width: 500px;
+                gap: 7px;
+                padding: 14px 0;
+            }
+            .left-side .nav-item {
+                font-size: .9rem;
+                min-height: 46px;
+                padding: 12px 9px;
+                gap: 8px;
+                letter-spacing: .02em;
+            }
+            .left-side .nav-item i { font-size: 1.14rem; }
+            .left-side .like-section { padding-top: 20px; margin-top: 0; }
+            .right-side {
+                width: 100%;
+                height: auto;
+                overflow: visible;
+                margin-left: 0;
+                padding: 28px 18px;
+            }
+            .content-section {
+                min-height: 0;
+                margin-bottom: 52px;
+                scroll-margin-top: 18px;
+            }
+            .section-title { font-size: 2rem; padding-bottom: 12px; }
+            .section-content { font-size: 1rem; line-height: 1.75; overflow-wrap: anywhere; }
+            .section-content h3 { font-size: 1.25em; }
+            .skills-columns { grid-template-columns: 1fr; gap: 16px; }
+            .transparent-mov, .gif-mov { width: 100%; height: auto; max-height: 260px; margin-left: 0; }
+            .project-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+            .project-thumbnail { display: block; width: 100%; height: auto; }
+            #publications .paper-item { gap: 10px; }
+            #publications .paper-number { flex-basis: 26px; width: 26px; }
+            #publications .paper-resource { padding-left: 36px; }
+            #publications .paper-footer { gap: 8px 12px; }
+            #publications .paper-links a { padding: 8px 10px; }
+            #publications .paper-authors { line-height: 1.65; }
+        }
+        @media (max-width: 360px) {
+            .left-side { padding-left: 12px; padding-right: 12px; }
+            .left-side .nav-item { font-size: .84rem; gap: 5px; padding: 12px 6px; }
+            .right-side { padding-left: 12px; padding-right: 12px; }
+        }
+
     </style>
 </head>
 <body>
@@ -1325,31 +1411,34 @@
             });
         });
 
-        // Update active nav item on scroll
+        // Track the section in the active desktop or mobile scrolling surface.
         const rightSide = document.querySelector('.right-side');
         const sections = document.querySelectorAll('.content-section');
         const navItems = document.querySelectorAll('.nav-item');
-
-        rightSide.addEventListener('scroll', function() {
+        let navigationFrame = 0;
+        function updateActiveNavigation() {
+            navigationFrame = 0;
+            const mobile = window.matchMedia('(max-width: 768px)').matches;
+            const boundary = mobile ? 110 : rightSide.getBoundingClientRect().top + 110;
             let current = '';
-            const scrollPosition = rightSide.scrollTop + 100;
-            
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
+                if (section.getBoundingClientRect().top <= boundary) current = section.id;
             });
-
+            if (!current) current = 'video';
             navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('data-target') === current) {
-                    item.classList.add('active');
-                }
+                const active = item.dataset.target === current;
+                item.classList.toggle('active', active);
+                if (active) item.setAttribute('aria-current', 'location');
+                else item.removeAttribute('aria-current');
             });
-        });
+        }
+        function scheduleNavigationUpdate() {
+            if (!navigationFrame) navigationFrame = requestAnimationFrame(updateActiveNavigation);
+        }
+        rightSide.addEventListener('scroll', scheduleNavigationUpdate, { passive: true });
+        window.addEventListener('scroll', scheduleNavigationUpdate, { passive: true });
+        window.addEventListener('resize', scheduleNavigationUpdate);
+        window.addEventListener('load', scheduleNavigationUpdate);
 
         // Initial activation
         window.addEventListener('load', function() {
