@@ -921,6 +921,14 @@
             .left-side .profile-photo { width: min(241.92px, 72vw); }
         }
 
+
+        /* One localized sidebar name, with calligraphy for Chinese. */
+        .left-side .name { margin-bottom: 24px; }
+        html[lang="zh-CN"] .left-side .name {
+            font-family: "Kaiti SC", "STKaiti", "KaiTi", "楷体", "Noto Serif CJK SC", serif;
+            letter-spacing: .14em;
+            padding-left: .14em;
+        }
     </style>
 </head>
 <body>
@@ -932,7 +940,6 @@
             
             <!-- Name with larger font size -->
             <div class="name">Yijun Wang</div>
-            <div class="name-CN">王倚君</div>
             
             <div class="language-switch" role="group" aria-label="Language / 语言">
                 <button type="button" data-language="en" lang="en" aria-pressed="true">English</button>
@@ -1571,6 +1578,7 @@
             function setLanguage(language) {
                 const chinese = language === 'zh';
                 document.documentElement.lang = chinese ? 'zh-CN' : 'en';
+                document.querySelector('.left-side .name').textContent = chinese ? '王倚君' : 'Yijun Wang';
                 document.title = chinese ? '王倚君 | 个人主页' : 'Yijun Wang | Personal Website';
                 textNodes.forEach(({ node, original, key }) => {
                     node.nodeValue = chinese ? original.replace(key, translations[key]) : original;
