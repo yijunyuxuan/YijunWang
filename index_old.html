@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Split screen container - Full page */
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Left side - Navigation with background image */
+        .left-side {
+            width: 20%;
+            background-image: url('your-background-image.jpg'); /* Upload your image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 40px 15px;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Overlay for better text readability */
+        .left-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .left-side > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Profile photo */
+        /* .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            margin-bottom: 30px;
+        } */
+
+        /* Name with larger font size */
+        .name {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Chinese Name with larger font size */
+        .name-CN {
+            font-size: 2.0em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Navigation items - no background boxes */
+        .nav-items {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            margin: 2px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: center;
+            gap: 2px;
+        }
+
+        /* Hover effect - font size larger */
+        .nav-item:hover {
+            font-size: 20px;
+            transform: scale(1.05);
+            color: white;
+        }
+
+        .nav-item.active {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        .nav-item.external-link {
+            text-decoration: none;
+            color: white;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .nav-item.external-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #ffeb3b;
+        }
+
+        .page-views {
+            position: absolute;
+            bottom: 2rem;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.7);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        #viewCount {
+            font-weight: bold;
+            color: #ff6b6b;
+            font-size: 1.1rem;
+        }
+
+        /* Right side - Content with seashell background */
+        .right-side {
+            width: 80%;
+            background-image: url('your-background-image2.jpg'); /* Upload your image */
+            background-color: #fff2e9;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            margin-left: 20%;
+            padding: 40px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        /* GIF-like Video section - small distance to next section */
+        .gif-section {
+            width: 100%;
+            margin-bottom: 0; /* Small distance to first section */
+            margin-top: 5px;
+            margin-left: 0px;
+            text-align: left;
+            min-height: 30vh;
+        }
+
+        .gif-mov {
+            width: 100%;
+            max-width: 1500px;
+            height: 400px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-left: 5px;
+            /* Hide all video controls and make it look like GIF */
+            -webkit-appearance: none;
+            appearance: none;
+            background: #000;
+            pointer-events: none;
+        }
+
+        /* Completely hide all video controls in all browsers */
+        .gif-video::-webkit-media-controls {
+            display: none !important;
+        }
+
+        .gif-video::-webkit-media-controls-panel {
+            display: none !important;
+        }
+
+        .gif-mov::-webkit-media-controls-play-button,
+        .gif-mov::-webkit-media-controls-start-playback-button,
+        .gif-mov::-webkit-media-controls-timeline,
+        .gif-mov::-webkit-media-controls-current-time-display,
+        .gif-mov::-webkit-media-controls-time-remaining-display,
+        .gif-mov::-webkit-media-controls-mute-button,
+        .gif-mov::-webkit-media-controls-volume-slider,
+        .gif-mov::-webkit-media-controls-fullscreen-button,
+        .gif-mov::-webkit-media-controls-overlay-play-button {
+            display: none !important;
+        }
+
+        .transparent-video-container {
+            background: transparent;
+            padding: 0;
+        }
+
+        .transparent-mov {
+            width: 100%;
+            max-width: 1500px;
+            height: 400px;
+            object-fit: contain;
+            
+            /* 确保视频本身不添加任何背景 */
+            background: transparent !important;
+            mix-blend-mode: normal;
+            
+            /* GIF-like behavior */
+            -webkit-appearance: none;
+            appearance: none;
+            pointer-events: none;
+        }
+
+        /* 隐藏所有控制条 */
+        .transparent-mov::-webkit-media-controls { display: none !important; }
+        .transparent-mov::-webkit-media-controls-panel { display: none !important; }
+
+        /* Content sections */
+        .content-section {
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 100px;
+            margin-top: 0px;
+        }
+
+        .section-title {
+            font-size: 3em;
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 3px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .section-content {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .section-content h3 {
+            color: #333;
+            margin: 25px 0 15px 0;
+            font-size: 1.5em;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .section-content a {
+            color: #0366d6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .section-content a:hover {
+            color: #0256b3;
+            text-decoration: underline;
+        }
+
+        /* Skill section styling */
+        .skills-columns {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .skills-columns {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        /* Papers section styling */
+        .papers-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .paper-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid #0366d6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .paper-number {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background: #0366d6;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 15px;
+            margin-top: 2px; /* 微调垂直对齐 */
+            font-size: 0.9em;
+        }
+
+        .paper-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            line-height: 1.4;
+        }
+
+        .paper-authors {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+
+        .paper-venue {
+            color: #888;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .paper-links a {
+            color: #0366d6;
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 0.9em;
+            padding: 4px 8px;
+            border: 1px solid #0366d6;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .paper-links a:hover {
+            background-color: #0366d6;
+            color: white;
+            text-decoration: none;
+        }
+
+        .paper-content {
+            flex: 1;
+        }
+
+        .profile-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-thumbnail {
+            max-width: 100%;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-links a {
+            color: #0366d6;
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: 500;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style for external links */
+        .custom-link {
+            color: #0366d6;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .custom-link:hover {
+            color: #0256b3;
+            background-color: rgba(3, 102, 214, 0.1);
+            text-decoration: underline;
+            transform: translateY(-2px);
+        }
+
+
+        /* Gentle pink-to-red appreciation button */
+        .like-section { position: absolute; bottom: 2rem; text-align: center; padding: 1.5rem 1rem; min-width: 150px; }
+        .like-button {
+            background: #f8bbd0; color: #84233d; border: 0; padding: 13px 23px;
+            border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 9px;
+            margin: 0 auto; box-shadow: 0 4px 14px rgba(210, 70, 110, .18);
+            transition: background-color .35s ease, color .35s ease, box-shadow .35s ease, transform .2s ease;
+        }
+        .like-button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(210,70,110,.25); }
+        .like-button:active { transform: scale(.96); }
+        .like-button.clicked { background: #d9364f; color: #fff; }
+        .like-icon { font-size: 1.25rem; line-height: 1; transition: transform .35s ease; }
+        .like-button:hover .like-icon { transform: scale(1.15); }
+        .like-heart-particle {
+            position: fixed; z-index: 9999; pointer-events: none; line-height: 1;
+            font-size: var(--heart-size); color: var(--heart-color);
+            animation: like-heart-float 1.3s ease-out forwards;
+        }
+        @keyframes like-heart-float {
+            0% { opacity: 0; transform: translate(-50%, 0) scale(.4) rotate(-12deg); }
+            20% { opacity: 1; }
+            100% { opacity: 0; transform: translate(calc(-50% + var(--heart-x)), var(--heart-y)) scale(1.2) rotate(var(--heart-rotation)); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .like-button { transition: none; }
+            .like-heart-particle { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .paper-item {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+    
+            .paper-number {
+                width: 28px;
+                height: 28px;
+                line-height: 28px;
+                margin-right: 12px;
+                font-size: 0.8em;
+            }
+    
+            .paper-title {
+                font-size: 1em;
+            }
+    
+            .paper-links a {
+                display: inline-block;
+                margin-bottom: 5px;
+                margin-right: 10px;
+            }
+        }
+
+        /* Make sure content takes full height */
+        html, body {
+            height: 100%;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .left-side, .right-side {
+                width: 100%;
+                position: static;
+                margin-left: 0;
+            }
+            
+            .left-side {
+                height: auto;
+                min-height: 50vh;
+            }
+            
+            .right-side {
+                height: 50vh;
+            }
+
+            .name {
+                font-size: 2em;
+            }
+
+            .gif-video {
+                height: 400px;
+            }
+        }
+
+        /* Publications: visual research gallery */
+        #publications { justify-content: flex-start; }
+        .pub-intro { color: #687487; font-size: 1rem; margin: 12px 0 22px; }
+        .publication-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+        .publication-card { min-width: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 13px; background: rgba(255,255,255,.93); border: 1px solid rgba(37,76,116,.15); box-shadow: 0 5px 20px rgba(17,43,75,.12); transition: transform .2s ease, box-shadow .2s ease; }
+        .publication-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(17,43,75,.18); }
+        .publication-visual { position: relative; aspect-ratio: 16/10; background: radial-gradient(circle at 45% 50%, #15355b, #061326 75%); overflow: hidden; }
+        .publication-visual img { width: 100%; height: 100%; display: block; object-fit: cover; }
+        .publication-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 18px; text-align: center; color: #a9c8e7; font-size: .95rem; line-height: 1.5; letter-spacing: .02em; }
+        .publication-visual img:not([src]) { display: none; }
+        .publication-visual img[src] + .publication-placeholder { display: none; }
+        .publication-details { padding: 17px 17px 19px; display: flex; flex: 1; flex-direction: column; }
+        .publication-meta { font-size: .76rem; font-weight: 700; color: #376e9e; letter-spacing: .06em; margin-bottom: 9px; }
+        #publications .publication-title { color: #1a2f47; font-size: 1rem; font-weight: 700; line-height: 1.45; margin: 0 0 11px; overflow-wrap: anywhere; }
+        #publications .publication-authors { font-size: .81rem; color: #526275; font-style: normal; line-height: 1.55; margin: 0 0 11px; overflow-wrap: anywhere; }
+        #publications .publication-authors strong { color: #235c90; }
+        #publications .publication-venue { font-size: .82rem; color: #718094; margin: 0 0 14px; }
+        #publications .publication-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        #publications .publication-links a { display: inline-block; margin: 0; padding: 5px 10px; border-radius: 5px; border: 1px solid #b9d3ed; color: #185c9b; background: #f5faff; text-decoration: none; font-size: .8rem; }
+        #publications .publication-links a:hover { color: #fff; background: #185c9b; }
+        .publication-more { margin-top: 34px; }
+        .publication-more h3 { color: #30445a; font-size: 1.25rem; margin: 0 0 14px; }
+        .publication-more .papers-list { margin-top: 0; }
+        .publication-more .paper-item { font-size: .87rem; }
+        @media (max-width: 1200px) { .publication-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 700px) { .publication-grid { grid-template-columns: 1fr; } .right-side { padding: 24px 16px; } }
+        @media (prefers-reduced-motion: reduce) { .publication-card { transition: none; } }
+        /* Publication thumbnails: enlarge on hover without changing card layout */
+        .publication-card { overflow: visible; position: relative; }
+        .publication-card:hover { z-index: 20; }
+        .publication-visual { overflow: visible; z-index: 1; }
+        .publication-visual img {
+            position: relative;
+            z-index: 1;
+            transform-origin: center center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: zoom-in;
+        }
+        .publication-visual img:hover {
+            transform: scale(1.8);
+            z-index: 30;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+            border-radius: 6px;
+        }
+        @media (max-width: 700px) {
+            .publication-visual img:hover { transform: scale(1.15); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .publication-visual img { transition: none; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Side - Navigation -->
+        <div class="left-side">
+            <!-- Profile Photo -->
+            <img src="your-photo.jpg" alt="Profile Photo" class="profile-photo">
+            
+            <!-- Name with larger font size -->
+            <div class="name">Yijun Wang</div>
+            <div class="name-CN">王倚君</div>
+            
+            <!-- Navigation Items - no background boxes -->
+            <div class="nav-items">
+                <div class="nav-item active" data-target="video">INTRODUCTION</div>
+                <div class="nav-item" data-target="about">ABOUT ME</div>
+                <div class="nav-item" data-target="experience">EXPERIENCE</div>
+                <div class="nav-item" data-target="education">EDUCATION</div>
+                <div class="nav-item" data-target="skills">SKILLS</div>
+                <div class="nav-item" data-target="publications">PUBLICATIONS</div>
+                <div class="nav-item" data-target="funding">FUNDING</div>
+                <div class="nav-item" data-target="contact">CONTACT</div>
+                <div class="nav-item" data-target="life">LIFE</div>
+            </div>
+            <div class="like-section" aria-label="Website appreciation">
+                <button id="likeButton" class="like-button" type="button" aria-pressed="false">
+                    <span class="like-icon" aria-hidden="true">♡</span>
+                    <span class="like-text">Like this website</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Side - Content -->
+        <div class="right-side">
+            <!-- Cross-browser transparent welcome animation -->
+            <section id="video" class="content-section">
+                <div class="transparent-video-container">
+                    <video class="transparent-mov" id="welcomeVideo" autoplay muted loop playsinline preload="auto" aria-label="Animated welcome greeting"></video>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="content-section">
+                <h2 class="section-title">About Me
+                    <i class="fa-solid fa-user-astronaut"></i>
+                    <!-- <i class="fa-solid fa-user-secret"></i> -->
+                </h2>
+                <div class="section-content">
+                    <p>Hello!😁 I am a Special Associate Researcher in the School of Astronomy and Space Science at Nanjing University.</p>
+                    <p>My previous works include X-ray spectral variabilities in blazars, warm absorber outflows, ambient circumnuclear medium around supermassive black hole, and radio activities of AGN from accretion disk scale to the large-scale environment.</p>
+                    <p>Now my interests focus on AGN feedback on host galaxies and surrounding environments.</p>
+                    <p>You can find my resume <a href="Wang_Yijun_resume.pdf" download style="color: #0366d6; text-decoration: none;">here</a> and my research experience <a href="Wang_Yijun_Research_Experience.pdf" download style="color: #0366d6; text-decoration: none;">here</a>.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="content-section">
+                <h2 class="section-title">Experience
+                    <i class="fa-solid fa-suitcase"></i>
+                </h2>
+                <div class="section-content">
+                    <h3>Special Associate Researcher @ Nanjing University (2024-Present)</h3>
+                    <p> Working in Prof. Tao Wang's group.</p>
+                    <p>Leading works about minor-merger induced star formation rejuvenation in an elliptical radio-loud AGN host 3C 59, warm absorber outflows around the central engine of 3C 59, and radio AGN feedback to the surrounding satellite galaxies.</p>
+                </div>
+                 <div class="section-content">
+                    <h3>Special Assistant Researcher @ Nanjing University (2021-2024)</h3>
+                    <p> Working in Prof. Tao Wang's group.</p>
+                    <p>Leading works about density profile of the ambient circumnuclear medium around supermassive black hole, and radio activities of AGN from accretion disk scale to host galaxy scale.</p>
+                </div>
+          </section>
+
+            <!-- Education Section -->
+            <section id="education" class="content-section">
+                <h2 class="section-title">Education
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </h2>
+                <div class="section-content">
+                    <h3>Doctor of Science in Astrophysics (2014-2021)</h3>
+                    <p>@ University of Science and Technology of China (USTC)</p>
+                    <p>Studying in Prof. Yongquan Xue's group.</p>
+                    <p> Leading works on X-ray spectral variability in blazars.</p>
+                    
+                    <h3>Visiting PhD student in Astrophysics (2019-2020)</h3>
+                    <p>@ Space Research Organisation Netherlands (SRON) & Leiden University</p>
+                    <p>Studying in Prof. Jelle Kaastra's group.</p>
+                    <p> Participating a series of works on warm absorber outflows and obscured winds in NGC 3227, and leading one of the projects.</p>
+                    
+                    <h3>Bachelor of Science in Agriculture (2010-2014)</h3>
+                    <p>@ Huazhong Agriculture Univerisy (HZAU)</p>
+                    <p>Cultivating a variety of crops such as rapeseed, rice, wheat, cotton, corn, and others, and learning basic plant gene extraction techniques and meteorology.</p>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="content-section">
+                <h2 class="section-title">
+                    Skills
+                    <i class="fa-solid fa-laptop-code"></i>
+                </h2>
+
+                <div class="section-content skills-columns">
+                    <div>
+                        <h3>Data Reduction</h3>
+                        <p>XMM-Newton &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                        <p>NuSTAR &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                        <p>Swift &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                        <p>RXTE &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                    </div>
+
+                    <div>
+                        <h3>Software or code</h3>
+                        <p>SPEX &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                        <p>CIGALE &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                        <p>galight &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                        <p>EAZY &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                        <p>XSPEC &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                        <p>QSOfit &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                        <p>Photoshop &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications Section -->
+            <section id="publications" class="content-section">
+                <h2 class="section-title">Publications
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    </h2>
+                <div class="section-content">
+                    <h3>First-Author Papers</h3>
+                    <ul class="papers-list">
+                        <!-- Paper 1 -->
+                        <li class="paper-item">
+                            <span class="paper-number">1</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Satellite quenching by radio jets of central galaxies in galaxy groups</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Dingyi Zhao, Yingjie Peng, Mark T. Sargent, Ziwen Zhang, Houjun Mo, Feng Yuan, Zhaozhou Li, Lingyu Wang, Yu Qiu, Yangyao Chen, Ke Xu</div>
+                                <div class="paper-venue">Submitted, 2026</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260702801W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2607.02801" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 2 -->
+                        <li class="paper-item">
+                            <span class="paper-number">2</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Warm absorber outflows in radio-loud active galactic nucleus 3C 59</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Junjie Mao, Yerong Xu, Zhicheng He, Zheng Zhou, Yongquan Xue, Jiayi Chen, Chen Li, Fangzheng Shi, Missagh Mehdipour</div>
+                                <div class="paper-venue">A&A, 2026</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2026A%26A...705A..95W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2510.06752" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 3 -->
+                        <li class="paper-item">
+                            <span class="paper-number">3</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Minor-merger induced star formation rejuvenation in an elliptical radio-loud quasar host, 3C 59</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Ke Xu, Junjie Mao, Yerong Xu, Zheng Zhou</div>
+                                <div class="paper-venue">ApJ, 2025</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...980..107W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2412.11367" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- Paper 4 -->
+                        <li class="paper-item">
+                            <span class="paper-number">4</span>
+                            <div class="paper-content">
+                                <div class="paper-title">The fundamental plane of black hole activity for low-luminosity radio active galactic nuclei across 0 < z < 4</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Luis C. Ho, Yuxing Zhong, Bin Luo</div>
+                                <div class="paper-venue">A&A, 2024</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...689A.327W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2402.17991" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 5 -->
+                        <li class="paper-item">
+                            <span class="paper-number">5</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Cosmic evolution of radio-excess active galactic nuclei in quiescent and star-forming galaxies across 0 < z < 4</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Daizhong Liu, Mark T. Sargent, Fangyou Gao, David M. Alexander, Wiphu Rujopakarn, Luwenjia Zhou, Emanuele Daddi, Ke Xu, Kotaro Kohno, Shuowen Jin</div>
+                                <div class="paper-venue">A&A, 2024</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...685A..79W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2401.04924" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 6 -->
+                        <li class="paper-item">
+                            <span class="paper-number">6</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Density profile of the ambient circumnuclear medium in Seyfert 1 galaxies</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Zhicheng He, Junjie Mao, Jelle Kaastra, Yongquan Xue, and Mehdipour Missagh</div>
+                                <div class="paper-venue">ApJ, 2022</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2022ApJ...928....7W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2202.01502" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 7 -->
+                        <li class="paper-item">
+                            <span class="paper-number">7</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Transient obscuration event captured in NGC 3227 II. Warm absorbers and obscuration events in archival XMM-Newton and NuSTAR observations</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Jelle Kaastra, Mehdipour Missagh, Junjie Mao, Elisa Costantini, Gerard A. Kriss, Ciro Pinto, Gabriele Ponti, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, Barbara De Marco, Sam Grafton-Waters, Pierre Olivier Petrucci, Jacobo Ebrero, Dominic James Walton, Shai Kaspi, Yongquan Xue, Stáphane Paltani, Laura di Gesu, Zhicheng He</div>
+                                <div class="paper-venue">A&A, 2022</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2022A%26A...657A..77W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2110.07861" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 8 -->
+                        <li class="paper-item">
+                            <span class="paper-number">8</span>
+                            <div class="paper-content">
+                                <div class="paper-title">X-ray spectral variations of synchrotron peak in BL Lacs</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Shifu Zhu, Yongquan Xue, Minfeng Gu, Shanshan Weng, and Huynh Anh N. Le</div>
+                                <div class="paper-venue">ApJ, 2019</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...885....8W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/1909.06801" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 9 -->
+                        <li class="paper-item">
+                            <span class="paper-number">9</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Systematic investigation of X-ray spectral variability of TeV blazars during flares in the RXTE era</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Yongquan Xue, Shifu Zhu, and Junhui Fan</div>
+                                <div class="paper-venue">ApJ, 2018</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2018ApJ...867...68W/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/1809.08036" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <h3>Book Chapter</h3>
+                    <ul class="papers-list">
+                        <!-- Paper 10 -->
+                        <li class="paper-item">
+                            <span class="paper-number">10</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Chapter "High-Resolution Spectral Analysis" in Book "High-Resolution X-ray Spectroscopy: Instrumentation, Data Analysis, and Science"</div>
+                                <div class="paper-authors"><strong>Yijun Wang</strong>, Jelle de Plaa</div>
+                                <div class="paper-venue">Springer, 2023</div>
+                                <div class="paper-links">
+                                    <a href="https://link.springer.com/chapter/10.1007/978-981-99-4409-5_6" target="_blank">Springer link of this Chapter</a>
+                                    <a href="https://link.springer.com/book/10.1007/978-981-99-4409-5" target="_blank">Springer link of the Book</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h3>Co-authored Papers</h3>
+                    <ul class="papers-list">
+                        <!-- Paper 11 -->
+                        <li class="paper-item">
+                            <span class="paper-number">11</span>
+                            <div class="paper-content">
+                                <div class="paper-title">An empirical model of the extragalactic radio background</div>
+                                <div class="paper-authors">Fangyou Gao, Tao Wang, <strong>Yijun Wang</strong></div>
+                                <div class="paper-venue">A&A, 2025</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2025A%26A...694A.261G/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2412.08995" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 12 -->
+                        <li class="paper-item">
+                            <span class="paper-number">12</span>
+                            <div class="paper-content">
+                                <div class="paper-title">On the connection between the repeated X-ray quasiperiodic oscillation and warm absorber in the active galaxy RE J1034+396</div>
+                                <div class="paper-authors">Zheng Zhou, Junjie Mao, Taotao Fang, <strong>Yijun Wang</strong></div>
+                                <div class="paper-venue">ApJ, 2024</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2024ApJ...967..105Z/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2404.01377" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 13 -->
+                        <li class="paper-item">
+                            <span class="paper-number">13</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Transient obscuration event captured in NGC 3227. I. Continuum model for the broadband spectral energy distribution</div>
+                                <div class="paper-authors">Missagh Mehdipour, G. A. Kriss, Jelle Kaastra, <strong>Yijun Wang</strong>, Junjie Mao, Elisa Costantini, N. Arav, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, M. Brotherton, M. Cappi, Barbara De Marco, Laura di Gesu, Jacobo Ebrero, Sam Grafton-Waters, Shai Kaspi, G. Matt, Stáphane Paltani, Pierre Olivier Petrucci, Ciro Pinto, Gabriele Ponti, F. Ursini, Dominic James Walton</div>
+                                <div class="paper-venue">A&A, 2021</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/abs/2021A%26A...652A.150M/abstract" target="_blank">ADS</a>
+                                    <a href="https://arxiv.org/abs/2106.14957" target="_blank">arXiv</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Paper 14 -->
+                        <li class="paper-item">
+                            <span class="paper-number">14</span>
+                            <div class="paper-content">
+                                <div class="paper-title">Other collaborative works:</div>
+                                <div class="paper-links">
+                                    <a href="https://ui.adsabs.harvard.edu/user/libraries/TSAPl_nSSISjjT6ybgSaOA" target="_blank">ADS Library</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="project-grid">
+                        <div class="project-card">
+                           <img src="first_author_paper.jpg" class="project-thumbnail" loading="eager">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Funding Section -->
+            <section id="funding" class="content-section">
+                <h2 class="section-title">Funding
+                    <i class="fa-solid fa-wallet"></i>
+                </h2>
+                <div class="section-content">
+                    <h3>Research Grants</h3>
+                    <ul>
+                        <p>National Natural Science Foundation of China (NSFC), Young Scientists Fund <strong>(Principal Investigator)</strong></p>
+                        <p>Jiangsu Natural Science Foundation, Young Scientists Fund <strong>(Principal Investigator)</strong></p>
+                    </ul>
+
+                    <h3>Fellowships &amp; Scholarships</h3>
+                    <ul>
+                        <p><strong>2019</strong> &mdash; China Scholarship Council (CSC) Scholarship</p>
+                        <p><strong>2012</strong> &mdash; National Scholarship, Ministry of Education of China</p>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Contact Section -->
+            <section id="contact" class="content-section">
+                <h2 class="section-title">Contact
+                    <i class="fa-regular fa-handshake"></i>
+                </h2>
+                <div class="section-content">
+                    <p><strong>Email:</strong>
+                        <a href="mailto:wangyijun@nju.edu.cn">wangyijun@nju.edu.cn</a>
+                    </p>
+                    <p><strong>Location:</strong> Nanjing University (Xianlin Campus), 163 Xianlin Avenue, Qixia district, Nanjing, Jiangsu 210023, China</p>
+                </div>
+            </section>
+            
+            <!-- Life Section -->
+            <section id="life" class="content-section">
+                <h2 class="section-title">Life
+                    <i class="fa-solid fa-umbrella-beach"></i>
+                </h2>
+                <div class="section-content">
+                    <h3>My Hometown</h3>
+                    <p>I was born in Ningwu (宁武) county in northern Shanxi (山西) Province, China, a place with incredibly beautiful scenery <i class="fa-solid fa-mountain-sun"></i></p>
+                    <p> The Fen River <i class="fa-solid fa-water"></i>, which originates from my hometown, flows through the entire Shanxi Province and eventually empties into the Yellow River, serving as its second-largest tributary. Shanxi Province is one of the birthplaces of the Chinese nation, possessing the largest number of ancient architectural structures <i class="fa-solid fa-vihara"></i> in China as well as a long-standing history and culture.</p>
+                    <h3>My Daily Life</h3>
+                    <p>In daily life, I usually enjoy painting <i class="fa-solid fa-palette"></i>, cycling <i class="fa-solid fa-person-biking"></i>, and running <i class="fa-solid fa-person-running"></i>, and now I'm learning to play the drums <i class="fa-solid fa-drum"></i> &#9834;&#9835;&#9836;</p>
+                    <div class="project-grid">
+                        <div class="project-card">
+                           <img src="hobbies.jpg" class="project-thumbnail" loading="eager">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Ensure MOV video plays automatically like a GIF
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.transparent-mov');
+            // Safari: original transparent HEVC MOV. Chrome/Edge/Firefox: alpha VP9 WebM.
+            // Use browser detection only to prioritize the format; retry the other on error.
+            if (video) {
+                const ua = navigator.userAgent;
+                const safari = /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|FxiOS/i.test(ua);
+                const sources = safari
+                    ? ['your-video.mov', 'welcome_transparent.webm']
+                    : ['welcome_transparent.webm', 'your-video.mov'];
+                let sourceIndex = 0;
+                video.addEventListener('error', () => {
+                    if (++sourceIndex < sources.length) {
+                        video.src = sources[sourceIndex];
+                        video.load();
+                        video.play().catch(() => {});
+                    }
+                });
+                video.src = sources[0];
+                video.load();
+            }
+
+            
+            // Force video to play and loop
+            if (!video) return;
+            video.play().catch(function(error) {
+                // If autoplay fails, play on first user interaction
+                document.addEventListener('click', function() {
+                    video.play();
+                }, { once: true });
+            });
+            
+            // Ensure video loops properly
+            video.loop = true;
+
+        });
+
+        // Browser-local appreciation state; no remote counter or database required.
+        (function setupAppreciationButton() {
+            const button = document.getElementById('likeButton');
+            const icon = button.querySelector('.like-icon');
+            const label = button.querySelector('.like-text');
+            const storageKey = 'homepageAppreciationLiked';
+            let liked = false;
+            try { liked = localStorage.getItem(storageKey) === 'true' || localStorage.getItem('hasLiked') === 'true'; }
+            catch (error) { /* Private browsing may restrict storage. */ }
+
+            function render() {
+                button.classList.toggle('clicked', liked);
+                button.setAttribute('aria-pressed', String(liked));
+                icon.textContent = liked ? '♥' : '♡';
+                label.textContent = liked ? 'Thank you!' : 'Like this website';
+            }
+            function floatHearts() {
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                const rect = button.getBoundingClientRect();
+                for (let i = 0; i < 9; i++) {
+                    const heart = document.createElement('span');
+                    heart.className = 'like-heart-particle';
+                    heart.textContent = i % 3 === 2 ? '♡' : '♥';
+                    heart.style.left = `${rect.left + rect.width / 2}px`;
+                    heart.style.top = `${rect.top + rect.height / 2}px`;
+                    heart.style.setProperty('--heart-size', `${12 + (i % 4) * 4}px`);
+                    heart.style.setProperty('--heart-color', ['#e94c77', '#f6a1bd', '#d9364f'][i % 3]);
+                    heart.style.setProperty('--heart-x', `${(i - 4) * 17}px`);
+                    heart.style.setProperty('--heart-y', `${-65 - (i % 3) * 19}px`);
+                    heart.style.setProperty('--heart-rotation', `${(i - 4) * 12}deg`);
+                    heart.style.animationDelay = `${(i % 3) * 55}ms`;
+                    document.body.appendChild(heart);
+                    heart.addEventListener('animationend', () => heart.remove(), { once: true });
+                }
+            }
+            button.addEventListener('click', function() {
+                liked = !liked;
+                try { localStorage.setItem(storageKey, String(liked)); localStorage.removeItem('hasLiked'); }
+                catch (error) { /* The button still works for this visit. */ }
+                render();
+                if (liked) floatHearts();
+            });
+            render();
+        })();
+
+        // Navigation click handler - jump to sections
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Scroll to target section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Update active nav item on scroll
+        const rightSide = document.querySelector('.right-side');
+        const sections = document.querySelectorAll('.content-section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        rightSide.addEventListener('scroll', function() {
+            let current = '';
+            const scrollPosition = rightSide.scrollTop + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Initial activation
+        window.addEventListener('load', function() {
+            document.querySelector('.nav-item[data-target="video"]').classList.add('active');
+        });
+    </script>
+</body>
+</html>
