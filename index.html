@@ -289,6 +289,20 @@
             text-decoration: underline;
         }
 
+        /* Skill section styling */
+        .skills-columns {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .skills-columns {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
         /* Papers section styling */
         .papers-list {
             list-style: none;
