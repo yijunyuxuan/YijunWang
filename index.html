@@ -289,20 +289,6 @@
             text-decoration: underline;
         }
 
-        /* Skill section styling */
-        .skills-columns {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .skills-columns {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-        
         /* Papers section styling */
         .papers-list {
             list-style: none;
@@ -583,6 +569,112 @@
             .publication-visual img { transition: none; }
         }
 
+
+        /* Skills: two columns on desktop, one on small screens */
+        .skills-columns {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+        @media (max-width: 768px) {
+            .skills-columns { grid-template-columns: 1fr; gap: 20px; }
+        }
+
+        /* Publications: transparent list with automatic numbering per category */
+        #publications .papers-list {
+            list-style: none;
+            counter-reset: publication;
+            margin-top: 20px;
+            padding: 0;
+        }
+        #publications .paper-item {
+            counter-increment: publication;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin: 0 0 26px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            transform: none;
+        }
+        #publications .paper-number {
+            flex: 0 0 28px;
+            width: 28px;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            color: #222;
+            font-size: 0;
+            font-weight: normal;
+            line-height: 1.4;
+            text-align: right;
+        }
+        #publications .paper-number::before {
+            content: counter(publication);
+            font-size: 1.1rem;
+        }
+        #publications .paper-content { flex: 1; min-width: 0; }
+        #publications .paper-title {
+            margin: 0 0 10px;
+            color: #252525;
+            font-size: 1.1em;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+        #publications .paper-authors {
+            margin-bottom: 10px;
+            color: #3f3f3f;
+            font-size: .95em;
+            font-style: italic;
+            line-height: 1.65;
+        }
+        #publications .paper-authors strong { color: #0066cc; font-weight: 700; }
+        #publications .paper-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px 18px;
+        }
+        #publications .paper-venue {
+            margin: 0;
+            color: #595959;
+            font-size: .9em;
+            line-height: 1.8;
+        }
+        #publications .paper-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+        }
+        #publications .paper-links a {
+            display: inline-block;
+            margin: 0;
+            padding: 3px 8px;
+            border: 1px solid #1670d2;
+            border-radius: 3px;
+            background: transparent;
+            color: #0066cc;
+            font-size: .9em;
+            line-height: 1.4;
+            text-decoration: none;
+        }
+        #publications .paper-links a:hover,
+        #publications .paper-links a:focus-visible { background: #0066cc; color: white; }
+        #publications .papers-list + h3 { margin-top: 48px; }
+        #publications .paper-resource { counter-increment: none; padding-left: 42px; }
+        @media (max-width: 768px) {
+            #publications .paper-item { gap: 10px; margin-bottom: 24px; }
+            #publications .paper-number { flex-basis: 22px; width: 22px; }
+            #publications .paper-resource { padding-left: 32px; }
+        }
+
     </style>
 </head>
 <body>
@@ -681,29 +773,27 @@
 
             <!-- Skills Section -->
             <section id="skills" class="content-section">
-                <h2 class="section-title">
-                    Skills
+                <h2 class="section-title">Skills
                     <i class="fa-solid fa-laptop-code"></i>
                 </h2>
-
                 <div class="section-content skills-columns">
                     <div>
-                        <h3>Data Reduction</h3>
-                        <p>XMM-Newton &#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                        <p>NuSTAR &#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p>Swift &#9733;&#9733;&#9733;&#9734;&#9734;</p>
-                        <p>RXTE &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                    <h3>Data Reduction</h3>
+                    <p>XMM-Newton &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <p>NuSTAR &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                    <p>Swift &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                    <p>RXTE &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                    
                     </div>
-
                     <div>
-                        <h3>Software or code</h3>
-                        <p>SPEX &#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                        <p>CIGALE &#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                        <p>galight &#9733;&#9733;&#9733;&#9733;&#9733;</p>
-                        <p>EAZY &#9733;&#9733;&#9733;&#9733;&#9734;</p>
-                        <p>XSPEC &#9733;&#9733;&#9733;&#9734;&#9734;</p>
-                        <p>QSOfit &#9733;&#9733;&#9733;&#9734;&#9734;</p>
-                        <p>Photoshop &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <h3>Software or code</h3>
+                    <p>SPEX &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <p>CIGALE &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <p>galight &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+                    <p>EAZY &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+                    <p>XSPEC &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                    <p>QSOfit &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+                    <p>Photoshop &#9733;&#9733;&#9733;&#9733;&#9733;</p>
                     </div>
                 </div>
             </section>
@@ -718,126 +808,144 @@
                     <ul class="papers-list">
                         <!-- Paper 1 -->
                         <li class="paper-item">
-                            <span class="paper-number">1</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Satellite quenching by radio jets of central galaxies in galaxy groups</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Dingyi Zhao, Yingjie Peng, Mark T. Sargent, Ziwen Zhang, Houjun Mo, Feng Yuan, Zhaozhou Li, Lingyu Wang, Yu Qiu, Yangyao Chen, Ke Xu</div>
-                                <div class="paper-venue">Submitted, 2026</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">Submitted, 2026</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2026arXiv260702801W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2607.02801" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 2 -->
                         <li class="paper-item">
-                            <span class="paper-number">2</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Warm absorber outflows in radio-loud active galactic nucleus 3C 59</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Junjie Mao, Yerong Xu, Zhicheng He, Zheng Zhou, Yongquan Xue, Jiayi Chen, Chen Li, Fangzheng Shi, Missagh Mehdipour</div>
-                                <div class="paper-venue">A&A, 2026</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">A&A, 2026</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2026A%26A...705A..95W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2510.06752" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 3 -->
                         <li class="paper-item">
-                            <span class="paper-number">3</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Minor-merger induced star formation rejuvenation in an elliptical radio-loud quasar host, 3C 59</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Ke Xu, Junjie Mao, Yerong Xu, Zheng Zhou</div>
-                                <div class="paper-venue">ApJ, 2025</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">ApJ, 2025</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...980..107W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2412.11367" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
                         
                         <!-- Paper 4 -->
                         <li class="paper-item">
-                            <span class="paper-number">4</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">The fundamental plane of black hole activity for low-luminosity radio active galactic nuclei across 0 < z < 4</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Luis C. Ho, Yuxing Zhong, Bin Luo</div>
-                                <div class="paper-venue">A&A, 2024</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">A&A, 2024</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...689A.327W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2402.17991" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 5 -->
                         <li class="paper-item">
-                            <span class="paper-number">5</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Cosmic evolution of radio-excess active galactic nuclei in quiescent and star-forming galaxies across 0 < z < 4</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Tao Wang, Daizhong Liu, Mark T. Sargent, Fangyou Gao, David M. Alexander, Wiphu Rujopakarn, Luwenjia Zhou, Emanuele Daddi, Ke Xu, Kotaro Kohno, Shuowen Jin</div>
-                                <div class="paper-venue">A&A, 2024</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">A&A, 2024</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...685A..79W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2401.04924" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 6 -->
                         <li class="paper-item">
-                            <span class="paper-number">6</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Density profile of the ambient circumnuclear medium in Seyfert 1 galaxies</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Zhicheng He, Junjie Mao, Jelle Kaastra, Yongquan Xue, and Mehdipour Missagh</div>
-                                <div class="paper-venue">ApJ, 2022</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">ApJ, 2022</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2022ApJ...928....7W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2202.01502" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 7 -->
                         <li class="paper-item">
-                            <span class="paper-number">7</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Transient obscuration event captured in NGC 3227 II. Warm absorbers and obscuration events in archival XMM-Newton and NuSTAR observations</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Jelle Kaastra, Mehdipour Missagh, Junjie Mao, Elisa Costantini, Gerard A. Kriss, Ciro Pinto, Gabriele Ponti, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, Barbara De Marco, Sam Grafton-Waters, Pierre Olivier Petrucci, Jacobo Ebrero, Dominic James Walton, Shai Kaspi, Yongquan Xue, Stáphane Paltani, Laura di Gesu, Zhicheng He</div>
-                                <div class="paper-venue">A&A, 2022</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">A&A, 2022</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2022A%26A...657A..77W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2110.07861" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 8 -->
                         <li class="paper-item">
-                            <span class="paper-number">8</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">X-ray spectral variations of synchrotron peak in BL Lacs</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Shifu Zhu, Yongquan Xue, Minfeng Gu, Shanshan Weng, and Huynh Anh N. Le</div>
-                                <div class="paper-venue">ApJ, 2019</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">ApJ, 2019</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...885....8W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/1909.06801" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 9 -->
                         <li class="paper-item">
-                            <span class="paper-number">9</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Systematic investigation of X-ray spectral variability of TeV blazars during flares in the RXTE era</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Yongquan Xue, Shifu Zhu, and Junhui Fan</div>
-                                <div class="paper-venue">ApJ, 2018</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">ApJ, 2018</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2018ApJ...867...68W/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/1809.08036" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -847,14 +955,16 @@
                     <ul class="papers-list">
                         <!-- Paper 10 -->
                         <li class="paper-item">
-                            <span class="paper-number">10</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Chapter "High-Resolution Spectral Analysis" in Book "High-Resolution X-ray Spectroscopy: Instrumentation, Data Analysis, and Science"</div>
                                 <div class="paper-authors"><strong>Yijun Wang</strong>, Jelle de Plaa</div>
-                                <div class="paper-venue">Springer, 2023</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">Springer, 2023</div>
+                                    <div class="paper-links">
                                     <a href="https://link.springer.com/chapter/10.1007/978-981-99-4409-5_6" target="_blank">Springer link of this Chapter</a>
                                     <a href="https://link.springer.com/book/10.1007/978-981-99-4409-5" target="_blank">Springer link of the Book</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
@@ -864,49 +974,54 @@
                     <ul class="papers-list">
                         <!-- Paper 11 -->
                         <li class="paper-item">
-                            <span class="paper-number">11</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">An empirical model of the extragalactic radio background</div>
                                 <div class="paper-authors">Fangyou Gao, Tao Wang, <strong>Yijun Wang</strong></div>
-                                <div class="paper-venue">A&A, 2025</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">A&A, 2025</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2025A%26A...694A.261G/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2412.08995" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 12 -->
                         <li class="paper-item">
-                            <span class="paper-number">12</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">On the connection between the repeated X-ray quasiperiodic oscillation and warm absorber in the active galaxy RE J1034+396</div>
                                 <div class="paper-authors">Zheng Zhou, Junjie Mao, Taotao Fang, <strong>Yijun Wang</strong></div>
-                                <div class="paper-venue">ApJ, 2024</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">ApJ, 2024</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2024ApJ...967..105Z/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2404.01377" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
                         <!-- Paper 13 -->
                         <li class="paper-item">
-                            <span class="paper-number">13</span>
+                            <span class="paper-number" aria-hidden="true"></span>
                             <div class="paper-content">
                                 <div class="paper-title">Transient obscuration event captured in NGC 3227. I. Continuum model for the broadband spectral energy distribution</div>
                                 <div class="paper-authors">Missagh Mehdipour, G. A. Kriss, Jelle Kaastra, <strong>Yijun Wang</strong>, Junjie Mao, Elisa Costantini, N. Arav, Ehud Behar, Stefano Bianchi, Graziella Branduardi-Raymont, M. Brotherton, M. Cappi, Barbara De Marco, Laura di Gesu, Jacobo Ebrero, Sam Grafton-Waters, Shai Kaspi, G. Matt, Stáphane Paltani, Pierre Olivier Petrucci, Ciro Pinto, Gabriele Ponti, F. Ursini, Dominic James Walton</div>
-                                <div class="paper-venue">A&A, 2021</div>
-                                <div class="paper-links">
+                                <div class="paper-footer">
+                                    <div class="paper-venue">A&A, 2021</div>
+                                    <div class="paper-links">
                                     <a href="https://ui.adsabs.harvard.edu/abs/2021A%26A...652A.150M/abstract" target="_blank">ADS</a>
                                     <a href="https://arxiv.org/abs/2106.14957" target="_blank">arXiv</a>
+                                </div>
                                 </div>
                             </div>
                         </li>
 
-                        <!-- Paper 14 -->
-                        <li class="paper-item">
-                            <span class="paper-number">14</span>
+                        <!-- Other collaborative works -->
+                        <li class="paper-item paper-resource">
                             <div class="paper-content">
                                 <div class="paper-title">Other collaborative works:</div>
                                 <div class="paper-links">
