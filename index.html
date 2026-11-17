@@ -889,6 +889,38 @@
             .right-side { padding-left: 12px; padding-right: 12px; }
         }
 
+
+        /* Latest portrait size and author accent. */
+        .left-side .profile-photo { width: min(241.92px, 100%); }
+        #publications .paper-authors strong { color: #ff00ff; }
+        .language-switch {
+            display: inline-flex;
+            flex-shrink: 0;
+            gap: 4px;
+            padding: 4px;
+            margin: 0 0 20px;
+            border: 1px solid rgba(170, 215, 250, .3);
+            border-radius: 999px;
+            background: rgba(2, 13, 30, .3);
+        }
+        .language-switch button {
+            min-height: 40px;
+            padding: 8px 15px;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: #d9e8f5;
+            font: inherit;
+            font-size: .86rem;
+            cursor: pointer;
+        }
+        .language-switch button[aria-pressed="true"] { background: #bce7ff; color: #102b45; font-weight: 700; }
+        .language-switch button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+        html[lang="zh-CN"] body { font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+        @media (max-width: 768px) {
+            .left-side .profile-photo { width: min(241.92px, 72vw); }
+        }
+
     </style>
 </head>
 <body>
@@ -902,7 +934,11 @@
             <div class="name">Yijun Wang</div>
             <div class="name-CN">王倚君</div>
             
-            <!-- Navigation Items - no background boxes -->
+            <div class="language-switch" role="group" aria-label="Language / 语言">
+                <button type="button" data-language="en" lang="en" aria-pressed="true">English</button>
+                <button type="button" data-language="zh" lang="zh-CN" aria-pressed="false">中文</button>
+            </div>
+            <!-- Navigation Items -->
             <div class="nav-items">
                 <button type="button" class="nav-item active" data-target="video"><i class="fa-solid fa-star" aria-hidden="true"></i><span>INTRODUCTION</span></button>
                 <button type="button" class="nav-item" data-target="about"><i class="fa-solid fa-user" aria-hidden="true"></i><span>ABOUT ME</span></button>
@@ -1359,7 +1395,9 @@
                 button.classList.toggle('clicked', liked);
                 button.setAttribute('aria-pressed', String(liked));
                 icon.textContent = liked ? '♥' : '♡';
-                label.textContent = liked ? 'Thank you!' : 'Like this website';
+                label.textContent = document.documentElement.lang === 'zh-CN'
+                    ? (liked ? '谢谢你的喜欢！' : '喜欢这个网站')
+                    : (liked ? 'Thank you!' : 'Like this website');
             }
             function floatHearts() {
                 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -1387,6 +1425,7 @@
                 render();
                 if (liked) floatHearts();
             });
+            document.addEventListener('homepage-language-change', render);
             render();
         })();
 
@@ -1444,6 +1483,117 @@
         window.addEventListener('load', function() {
             document.querySelector('.nav-item[data-target="video"]').classList.add('active');
         });
+
+        // Bilingual content: original English text is retained for reversible switching.
+        // Add future English -> Chinese text pairs to this dictionary.
+        (function setupLanguageSwitch() {
+            const translations = {
+            "INTRODUCTION": "首页",
+            "ABOUT ME": "关于我",
+            "EXPERIENCE": "工作经历",
+            "EDUCATION": "教育经历",
+            "SKILLS": "专业技能",
+            "PUBLICATIONS": "学术成果",
+            "FUNDING": "科研资助",
+            "CONTACT": "联系方式",
+            "LIFE": "生活",
+            "About Me": "关于我",
+            "Experience": "工作经历",
+            "Education": "教育经历",
+            "Skills": "专业技能",
+            "Publications": "学术成果",
+            "Funding": "科研资助",
+            "Contact": "联系方式",
+            "Life": "生活",
+            "Hello!😁 I am a Special Associate Researcher in the School of Astronomy and Space Science at Nanjing University.": "你好！😁 我是南京大学天文与空间科学学院的特任副研究员。",
+            "My previous works include X-ray spectral variabilities in blazars, warm absorber outflows, ambient circumnuclear medium around supermassive black hole, and radio activities of AGN from accretion disk scale to the large-scale environment.": "我此前的研究包括耀变体的 X 射线能谱变化、暖吸收体外流、超大质量黑洞周围的核周介质，以及从吸积盘尺度到大尺度环境的活动星系核（AGN）射电活动。",
+            "Now my interests focus on AGN feedback on host galaxies and surrounding environments.": "目前，我主要关注活动星系核反馈对宿主星系及周围环境的影响。",
+            "You can find my resume": "我的个人简历可在",
+            "here": "此处下载",
+            "and my research experience": "，研究经历介绍可在",
+            "Special Associate Researcher @ Nanjing University (2024-Present)": "南京大学 · 特任副研究员（2024年至今）",
+            "Working in Prof. Tao Wang's group.": "在王涛教授课题组开展研究。",
+            "Leading works about minor-merger induced star formation rejuvenation in an elliptical radio-loud AGN host 3C 59, warm absorber outflows around the central engine of 3C 59, and radio AGN feedback to the surrounding satellite galaxies.": "主持开展以下研究：小并合诱发射电噪椭圆星系 3C 59 的恒星形成复苏、3C 59 中心引擎周围的暖吸收体外流，以及射电 AGN 反馈对周围卫星星系的影响。",
+            "Special Assistant Researcher @ Nanjing University (2021-2024)": "南京大学 · 特任助理研究员（2021—2024）",
+            "Leading works about density profile of the ambient circumnuclear medium around supermassive black hole, and radio activities of AGN from accretion disk scale to host galaxy scale.": "主持开展超大质量黑洞周围核周介质的密度分布研究，以及从吸积盘尺度到宿主星系尺度的 AGN 射电活动研究。",
+            "Doctor of Science in Astrophysics (2014-2021)": "天体物理学博士（2014—2021）",
+            "@ University of Science and Technology of China (USTC)": "中国科学技术大学（USTC）",
+            "Studying in Prof. Yongquan Xue's group.": "在薛永泉教授课题组学习与研究。",
+            "Leading works on X-ray spectral variability in blazars.": "主要开展耀变体 X 射线能谱变化的研究。",
+            "Visiting PhD student in Astrophysics (2019-2020)": "天体物理学访问博士生（2019—2020）",
+            "@ Space Research Organisation Netherlands (SRON) & Leiden University": "荷兰空间研究所（SRON）与莱顿大学",
+            "Studying in Prof. Jelle Kaastra's group.": "在 Jelle Kaastra 教授课题组学习与研究。",
+            "Participating a series of works on warm absorber outflows and obscured winds in NGC 3227, and leading one of the projects.": "参与 NGC 3227 暖吸收体外流及遮蔽外流的系列研究，并主持其中一项研究。",
+            "Bachelor of Science in Agriculture (2010-2014)": "农学学士（2010—2014）",
+            "@ Huazhong Agriculture Univerisy (HZAU)": "华中农业大学（HZAU）",
+            "Cultivating a variety of crops such as rapeseed, rice, wheat, cotton, corn, and others, and learning basic plant gene extraction techniques and meteorology.": "参与油菜、水稻、小麦、棉花、玉米等作物的栽培，学习植物基因提取基础技术与气象学。",
+            "Data Reduction": "数据处理",
+            "Software or code": "软件与代码",
+            "First-Author Papers": "第一作者论文",
+            "Book Chapter": "书籍章节",
+            "Co-authored Papers": "合作论文",
+            "Submitted, 2026": "已投稿，2026",
+            "Springer link of this Chapter": "章节链接（Springer）",
+            "Springer link of the Book": "全书链接（Springer）",
+            "Other collaborative works:": "其他合作成果：",
+            "ADS Library": "ADS 文献库",
+            "Research Grants": "科研项目",
+            "National Natural Science Foundation of China (NSFC), Young Scientists Fund": "国家自然科学基金青年科学基金项目",
+            "(Principal Investigator)": "（项目负责人）",
+            "Jiangsu Natural Science Foundation, Young Scientists Fund": "江苏省自然科学基金青年基金项目",
+            "Fellowships & Scholarships": "奖学金与留学资助",
+            "— China Scholarship Council (CSC) Scholarship": "— 国家留学基金管理委员会（CSC）公派留学资助",
+            "— National Scholarship, Ministry of Education of China": "— 教育部国家奖学金",
+            "Email:": "电子邮箱：",
+            "Location:": "地址：",
+            "Nanjing University (Xianlin Campus), 163 Xianlin Avenue, Qixia district, Nanjing, Jiangsu 210023, China": "中国江苏省南京市栖霞区仙林大道163号，南京大学仙林校区，邮编210023",
+            "My Hometown": "我的家乡",
+            "I was born in Ningwu (宁武) county in northern Shanxi (山西) Province, China, a place with incredibly beautiful scenery": "我出生于中国山西省北部的宁武县，那里风景秀丽",
+            "The Fen River": "汾河",
+            ", which originates from my hometown, flows through the entire Shanxi Province and eventually empties into the Yellow River, serving as its second-largest tributary. Shanxi Province is one of the birthplaces of the Chinese nation, possessing the largest number of ancient architectural structures": "发源于我的家乡，流经山西，最终汇入黄河，是黄河的第二大支流。山西是中华民族的发祥地之一，拥有中国数量最多的古建筑",
+            "in China as well as a long-standing history and culture.": "，也有着悠久的历史与文化。",
+            "My Daily Life": "日常生活",
+            "In daily life, I usually enjoy painting": "平时，我喜欢绘画",
+            ", cycling": "、骑行",
+            ", and running": "和跑步",
+            ", and now I'm learning to play the drums": "，最近也在学习架子鼓"
+};
+            const textNodes = [];
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            while (walker.nextNode()) {
+                const node = walker.currentNode;
+                if (node.parentElement.closest('script, style, .like-text, .language-switch')) continue;
+                const key = node.nodeValue.trim();
+                if (Object.prototype.hasOwnProperty.call(translations, key)) {
+                    textNodes.push({ node, original: node.nodeValue, key });
+                }
+            }
+            function setLanguage(language) {
+                const chinese = language === 'zh';
+                document.documentElement.lang = chinese ? 'zh-CN' : 'en';
+                document.title = chinese ? '王倚君 | 个人主页' : 'Yijun Wang | Personal Website';
+                textNodes.forEach(({ node, original, key }) => {
+                    node.nodeValue = chinese ? original.replace(key, translations[key]) : original;
+                });
+                document.querySelectorAll('[data-language]').forEach(button => {
+                    button.setAttribute('aria-pressed', String(button.dataset.language === language));
+                });
+                const photo = document.querySelector('.profile-photo');
+                photo.alt = chinese ? '王倚君的头像' : 'Portrait of Yijun Wang';
+                const video = document.getElementById('welcomeVideo');
+                if (video) video.setAttribute('aria-label', chinese ? '欢迎动画' : 'Animated welcome greeting');
+                try { localStorage.setItem('homepageLanguage', language); } catch (error) {}
+                document.dispatchEvent(new Event('homepage-language-change'));
+                if (typeof scheduleNavigationUpdate === 'function') scheduleNavigationUpdate();
+            }
+            document.querySelectorAll('[data-language]').forEach(button => {
+                button.addEventListener('click', () => setLanguage(button.dataset.language));
+            });
+            let language = 'en';
+            try { language = localStorage.getItem('homepageLanguage') === 'zh' ? 'zh' : 'en'; } catch (error) {}
+            setLanguage(language);
+        })();
+
     </script>
 </body>
 </html>
